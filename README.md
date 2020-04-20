@@ -1,9 +1,7 @@
-section8.4
-PIP_EXTRA_INDEX_URL==https://9MLcdpRNypabFSTs3u3Q@pypi.fury.io/rmania/
 
-
-
-git remote set-url origin git+ssh://git@github.com/rmania/ml_deployment.git
+Activate virtual env
+`virtualenv venv`
+`source venv/bin/activate`
 
 mismatchb arbeidsmarkt 
 we hebben afledingen afstuurders(quantiteit)
