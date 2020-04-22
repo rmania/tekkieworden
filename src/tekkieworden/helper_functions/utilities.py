@@ -25,19 +25,19 @@ def pandas_join_key_single(left_df, right_df, key):
     return joined_df
 
 
-def pandas_join_key_dual(left_df, right_df, left_key, right_key):
+def pandas_join_key_dual(left_df, right_df, left_key, right_key, how ):
 
     """
     perform join with dual keys (multiple)
     """
 
-    logging.info("left_df shape: {left_df.shape}")
-    logging.info("right_df shape: {right_df.shape}")
+    logging.info(f"left_df shape: {left_df.shape}")
+    logging.info(f"right_df shape: {right_df.shape}")
 
     logging.info(f"joining on left_key: {left_key}")
     logging.info(f"joining on right_key: {right_key}")
 
-    joined_df = left_df.merge(right_df, how="left", left_on=left_key, right_on=right_key, indicator=True)
+    joined_df = left_df.merge(right_df, how= how, left_on=left_key, right_on=right_key, indicator=True)
     # validate='one_to_many')
 
     logging.info(f"Join result\n{joined_df._merge.value_counts()}")
