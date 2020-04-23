@@ -1,0 +1,8 @@
+# Get token
+curl  -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=client_credentials&client_id=8f068d22-e357-4cdc-b214-d39c65d19cd1&client_secret=C46Tk4DGjt2royoX7Q5kuno4Wzq2T8G6aMNS1EAoKzc=" -X POST https://token.studiekeuzedatabase.nl/token
+
+# get data with BEARER Access token
+curl  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmlxdWVfbmFtZSI6InRla2tpZXdvcmRlbiIsInJvbGUiOlsiQWZuZW1lciIsIkFQSSBPcGxlaWRpbmdlbmJvb20iXSwiaXNzIjoiaHR0cHM6Ly90b2tlbi5zdHVkaWVrZXV6ZWRhdGFiYXNlLm5sIiwiYXVkIjoiNTc5ZDc4Yzc4MmIzNDcyNzk5YzllMWY2ZTA0NTU3NDgiLCJleHAiOjE1ODc2MzU5NTMsIm5iZiI6MTU4NzYzNDE1M30.OMsJTQkl_G1TcFJkIA1KlxnlQEerAZXbAhKtXckXSr4 " https://api.studiekeuzedatabase.nl/Studiekeuzedatabase.svc/
+
+# use refresh token for new access token
+curl  -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=refresh_token&refresh_token=7d791535a52049a991bd7ea9b3addd6c&client_id=8f068d22-e357-4cdc-b214-d39c65d19cd1" -X POST https://token.studiekeuzedatabase.nl/token

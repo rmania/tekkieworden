@@ -6,7 +6,7 @@ from config import PATH_TO_RAW_DATA, FILE_YEAR, HBO_CSV_URL, WO_CSV_URL, HBO_FIL
 def download_student_inscriptions(url, file):
     """
     :param url:  https://duo.nl/open_onderwijsdata/databestanden/ho/ingeschreven/
-    :param file: hbo_inscriptions + wo_inscriptions
+    :param file: Hoger Onderwijs hbo_inscriptions + wo_inscriptions
     :return: downloaded csv saved to RAW data folder
     """
     response = requests.get(url)
