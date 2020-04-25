@@ -42,8 +42,9 @@ def prepare_sdb_opleidingen_file(path, file):
     str_cols = ["brinnummer_sdb", "opleidingscode_sdb", "opleiding_sk123id_sdb"]
     for col in str_cols:
         df[col] = df[col].astype(str)
-    df["soortopleiding_sdb"] = df["soortopleiding_sdb"].str.lower()  # like in duo file
-
+    df["soortopleiding_sdb"] = df["soortopleiding_sdb"].str.lower()  # like in DUO file
+    df['soortho_sdb'] = df['soortho_sdb'].apply(lambda x: x.lower()) # like in DUO file
+    
     # cat opleidingsvormen into one column
     df["opleidingsvorm_sdb"] = np.where(
         df.voltijd_sdb == 1,
@@ -138,7 +139,7 @@ def concat_unstack_duo_ho_files(years=List[int]):
         "opleidingsnaam_duo",
         "ho_type",
         "soortopleiding_duo",
-        # 'opleidingsvorm_duo', # voltijd vs deeltijd
+        #'opleidingsvorm_duo', # voltijd vs deeltijd
         "geslacht",
     ]
 
@@ -184,12 +185,11 @@ def clean_string_fields(x):
         .replace("\r\n\r\n", " ")
         .replace(" \xa0", "")
         .replace("?s", "")
-        .replace("’", "")
-        .replace("‘", "")
+        .replace("`", "")
+        .replace("'", "")
         .replace("“", "")
         .replace("”", "")
-        .replace("—", "")
-    )
+        .replace("—", ""))
     x = "".join(word for word in x if word not in punctuation)
     x = word_tokenize(x)
     x = " ".join(word for word in x if word not in stopwords_nl)

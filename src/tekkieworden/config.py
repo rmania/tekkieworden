@@ -1,6 +1,8 @@
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).parent.parent.parent  # Assume this file lives in /src/tekkieworden!
+PROJECT_ROOT = Path(
+    __file__
+).parent.parent.parent  # Assume this file lives in /src/tekkieworden!
 
 # url + csv filenames for Hoger Onderwijs Ingeschrevenen from DUO.nl
 HBO_CSV_URL = "https://duo.nl/open_onderwijsdata/images/03b-eerstejaars-ingeschrevenen-hbo-domein-hbo-2019.csv"
@@ -9,8 +11,8 @@ WO_CSV_URL = "https://duo.nl/open_onderwijsdata/images/03b-eerstejaars-ingeschre
 HBO_FILE = "hbo_inscriptions"
 WO_FILE = "wo_inscriptions"
 
-DUO_HBO_CSV = 'hbo_inscriptions_2019.csv'
-DUO_WO_CSV = 'wo_inscriptions_2019.csv'
+DUO_HBO_CSV = "hbo_inscriptions_2019.csv"
+DUO_WO_CSV = "wo_inscriptions_2019.csv"
 
 
 FILE_YEAR = 2019

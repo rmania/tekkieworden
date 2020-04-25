@@ -5,6 +5,7 @@ import sys
 import re
 import string
 
+from typing import List
 from nltk.corpus import stopwords
 from nltk import word_tokenize
 from nltk.stem import PorterStemmer
@@ -38,9 +39,12 @@ def prepare_sdb_opleidingen_file(path, file):
 
     df.columns = df.columns + "_sdb"
 
-    df["brinnummer_sdb"] = df["brinnummer_sdb"].astype(str)
-    df["soortopleiding_sdb"] = df["soortopleiding_sdb"].str.lower()  # like in duo file
-
+    str_cols = ["brinnummer_sdb", "opleidingscode_sdb", "opleiding_sk123id_sdb"]
+    for col in str_cols:
+        df[col] = df[col].astype(str)
+    df["soortopleiding_sdb"] = df["soortopleiding_sdb"].str.lower()  # like in DUO file
+    df['soortho_sdb'] = df['soortho_sdb'].apply(lambda x: x.lower()) # like in DUO file
+    
     # cat opleidingsvormen into one column
     df["opleidingsvorm_sdb"] = np.where(
         df.voltijd_sdb == 1,
@@ -50,17 +54,18 @@ def prepare_sdb_opleidingen_file(path, file):
     for col in ["voltijd_sdb", "deeltijd_sdb", "duaal_sdb"]:
         df = df.drop(col, axis=1)
 
-    logging.info(f"Studiekeuze opledingen frame shape: {df.shape}")
+    logging.info(f"Studiekeuze opleidingen frame shape: {df.shape}")
     # logging.info(f'Extract \n: {df.head(5)}')
 
     return df
 
 
-def prepare_duo_ho_files(path, file: str):
+def prepare_duo_ho_files(path, file: str, ho_type: str):
     """
     Reads in and formats DUO files
     :param path: path to DUO file
     :param file: name of Duo file
+    :param ho_type: hbo or wo. Adds adequate column to dataset
     :return: formatted DUO file
     """
     df = pd.read_csv(path + file, sep=";")
@@ -99,19 +104,22 @@ def prepare_duo_ho_files(path, file: str):
     regex_pattern = "\s(.*)"  # extract string after first whitespace
     df["opleidingsnaam_duo"] = df["opleidingsnaam_duo"].str.extract(regex_pattern)
 
+    logging.info(f"Adding column: {ho_type}")
+    df[f"ho_type"] = ho_type
+
     logging.info(f"{file} shape: {df.shape}")
     return df
 
 
-def concat_unstack_duo_ho_files(year: int):
+def concat_unstack_duo_ho_files(years=List[int]):
     """
-    Pivotting the duo file and totalling the student numbers on year
-    :param year: totalling inschrijvingsdata from this year
-    :return: pivotted duo file with student totals
+    Pivotting the DUO file and totalling the student numbers on all years
+    :param years: list of years to be summed e.g. [2017, 2018, 2019]
+    :return: pivoted DUO file with summed inscriptions
     """
 
-    hbo = prepare_duo_ho_files(path=PATH_TO_RAW_DATA, file=DUO_HBO_CSV)
-    wo = prepare_duo_ho_files(path=PATH_TO_RAW_DATA, file=DUO_WO_CSV)
+    hbo = prepare_duo_ho_files(path=PATH_TO_RAW_DATA, file=DUO_HBO_CSV, ho_type="hbo")
+    wo = prepare_duo_ho_files(path=PATH_TO_RAW_DATA, file=DUO_WO_CSV, ho_type="wo")
     duo = pd.concat([wo, hbo], axis=0)
     logging.info(f"Concatting {DUO_HBO_CSV, DUO_WO_CSV}\n. Duo file shape: {duo.shape}")
 
@@ -122,25 +130,26 @@ def concat_unstack_duo_ho_files(year: int):
         .reset_index()
     )
 
-    logging.info("summing MAN, VROUW into TOTAL")
+    groupby_cols = [
+        "brinnummer_duo",
+        "instellingsnaam_duo",
+        "croho_onderdeel_duo",
+        "croho_subonderdeel_duo",
+        "opleidingscode_duo",
+        "opleidingsnaam_duo",
+        "ho_type",
+        "soortopleiding_duo",
+        #'opleidingsvorm_duo', # voltijd vs deeltijd
+        "geslacht",
+    ]
+
     duo_ = (
-        duo.groupby(
-            [
-                "brinnummer_duo",
-                "instellingsnaam_duo",
-                "opleidingsnaam_duo",
-                "croho_onderdeel",
-                "croho_subonderdeel",
-                # 'opleidingsvorm_duo',
-                # 'gemeentenummer_duo',
-                "soortopleiding_duo",
-                "geslacht",
-            ]
-        )[str(year)]
+        duo.groupby(groupby_cols)[str(years[-1])]
         .sum()
         .unstack("geslacht")
+        .drop("man", axis=1)
+        .drop("vrouw", axis=1)
     ).reset_index(drop=False)
-    duo_[f"tot_{year}_duo"] = duo_["man"].add(duo_["vrouw"])
 
     logging.info("Merge back the concatted gemeentes")
     duo_ = pd.merge(left=duo_, right=gemeentes, on=["brinnummer_duo"], how="left")
@@ -148,7 +157,19 @@ def concat_unstack_duo_ho_files(year: int):
     logging.info(f"Duo file shape: {duo_.shape}")
     logging.info(f"Extract \n: {duo_.head(5)}")
 
-    return duo_
+    logging.info("summing MAN, VROUW into TOTAL")
+
+    concatted_frame = []
+    for y in years:
+        duo_y = (
+            duo.groupby(groupby_cols)[str(y)].sum().unstack("geslacht")
+        ).reset_index(drop=False)
+        duo_y[f"tot_{y}_duo"] = duo_y["man"].add(duo_y["vrouw"])
+        concatted_frame.append(duo_y[f"tot_{y}_duo"])
+
+    concatted_df = pd.concat([duo_, pd.concat(concatted_frame, axis=1)], axis=1)
+
+    return concatted_df
 
 
 def clean_string_fields(x):
@@ -164,12 +185,11 @@ def clean_string_fields(x):
         .replace("\r\n\r\n", " ")
         .replace(" \xa0", "")
         .replace("?s", "")
-        .replace("’", "")
-        .replace("‘", "")
+        .replace("`", "")
+        .replace("'", "")
         .replace("“", "")
         .replace("”", "")
-        .replace("—", "")
-    )
+        .replace("—", ""))
     x = "".join(word for word in x if word not in punctuation)
     x = word_tokenize(x)
     x = " ".join(word for word in x if word not in stopwords_nl)

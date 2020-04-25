@@ -8,7 +8,7 @@ from typing import Dict
 from dotenv import dotenv_values
 
 
-class ExampleOAuth2Client:
+class OAuth2Client:
     def __init__(self, client_id, client_secret):
         self.access_token = None
 
