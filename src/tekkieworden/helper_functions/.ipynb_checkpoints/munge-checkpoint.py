@@ -4,6 +4,7 @@ import numpy as np
 import sys
 import re
 import string
+import pandas_profiling as pdp
 
 from typing import List
 from nltk.corpus import stopwords
@@ -20,7 +21,7 @@ from config import DUO_HBO_CSV, DUO_WO_CSV
 PATH_TO_RAW_DATA = "../../../data/raw/"
 
 
-def prepare_sdb_opleidingen_file(path, file):
+def prepare_sdb_opleidingen_file(path, file, data_quality_report= None):
     """
     Read in the Studiekeuze excel Opleidingen Sheet
     TODO: needs to point to the API calls
@@ -29,13 +30,19 @@ def prepare_sdb_opleidingen_file(path, file):
     :return: formatted SDB file
     """
     df = pd.read_excel(path + file, sheet_name="Opleidingen")
+    
+    if data_quality_report:
+        
+        sdb_profile_report = pdp.ProfileReport(sdb_all)
+        sdb_profile_report.to_file("../../../docs/data_quality_report/" + "sdb_data_quality_report.html")
+    
     logging.info(f"dropping columns: \n {drop_studiekeuze_cols}")
     for col in drop_studiekeuze_cols:
         df = df.drop(col, axis=1)
     df.columns = df.columns.str.lower()
     # check with Tekkieworden
-    logging.info(f"putting filter on:{df.actieveopleiding.name} == 1.0")
-    df = df[df.actieveopleiding == 1.0]
+    # logging.info(f"putting filter on:{df.actieveopleiding.name} == 1.0")
+    # df = df[df.actieveopleiding == 1.0]
 
     df.columns = df.columns + "_sdb"
 

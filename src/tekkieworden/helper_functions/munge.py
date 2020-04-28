@@ -4,6 +4,7 @@ import numpy as np
 import sys
 import re
 import string
+import pandas_profiling as pdp
 
 from typing import List
 from nltk.corpus import stopwords
@@ -15,27 +16,32 @@ sys.path.insert(0, "../")
 sys.path.insert(0, "../db_config/")
 
 from sdb_config import drop_studiekeuze_cols
-from config import DUO_HBO_CSV, DUO_WO_CSV
-
-PATH_TO_RAW_DATA = "../../../data/raw/"
+from config import DUO_HBO_CSV, DUO_WO_CSV, PATH_TO_RAW_DATA, PATH_TO_DATA_QUALITY_REPORT
 
 
-def prepare_sdb_opleidingen_file(path, file):
+def prepare_sdb_opleidingen_file(path, file, data_quality_report= None):
     """
     Read in the Studiekeuze excel Opleidingen Sheet
     TODO: needs to point to the API calls
     :param path: path to SDB excel
     :param file: name of SDB excel file
+    :param data_quality_report: generates and stores a Pandas profiling report
     :return: formatted SDB file
     """
     df = pd.read_excel(path + file, sheet_name="Opleidingen")
+    
+    if data_quality_report:
+        
+        sdb_profile_report = pdp.ProfileReport(sdb_all)
+        sdb_profile_report.to_file(PATH_TO_DATA_QUALITY_REPORT + "sdb_data_quality_report.html")
+    
     logging.info(f"dropping columns: \n {drop_studiekeuze_cols}")
     for col in drop_studiekeuze_cols:
         df = df.drop(col, axis=1)
     df.columns = df.columns.str.lower()
     # check with Tekkieworden
-    logging.info(f"putting filter on:{df.actieveopleiding.name} == 1.0")
-    df = df[df.actieveopleiding == 1.0]
+    # logging.info(f"putting filter on:{df.actieveopleiding.name} == 1.0")
+    # df = df[df.actieveopleiding == 1.0]
 
     df.columns = df.columns + "_sdb"
 
