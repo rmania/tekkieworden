@@ -31,7 +31,8 @@ def prepare_sdb_opleidingen_file(path, file, data_quality_report= None):
     df = pd.read_excel(path + file, sheet_name="Opleidingen")
     
     if data_quality_report:
-        
+
+        logging.info(f"Generating Data quality report. Storing : {PATH_TO_DATA_QUALITY_REPORT}")
         sdb_profile_report = pdp.ProfileReport(sdb_all)
         sdb_profile_report.to_file(PATH_TO_DATA_QUALITY_REPORT + "sdb_data_quality_report.html")
     
