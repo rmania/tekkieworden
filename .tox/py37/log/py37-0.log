@@ -1,7 +1,0 @@
-action: py37, msg: getenv
-cwd: /home/dmeijerink/pathe/tekkieworden/.tox
-cmd: /home/dmeijerink/pathe/tekkieworden/venv/bin/python -m virtualenv --no-download --python /home/dmeijerink/pathe/tekkieworden/venv/bin/python py37
-created virtual environment CPython3.7.3.final.0-64 in 2684ms
-  creator CPython3Posix(dest=/home/dmeijerink/pathe/tekkieworden/.tox/py37, clear=False, global=False)
-  seeder FromAppData(download=False, pip=latest, setuptools=latest, wheel=latest, via=copy, app_data_dir=/home/dmeijerink/.local/share/virtualenv/seed-app-data/v1.0.1)
-  activators BashActivator,CShellActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator

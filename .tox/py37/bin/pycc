@@ -1,3 +1,0 @@
-#!/home/dmeijerink/pathe/tekkieworden/.tox/py37/bin/python
-from numba.pycc import main
-main()
