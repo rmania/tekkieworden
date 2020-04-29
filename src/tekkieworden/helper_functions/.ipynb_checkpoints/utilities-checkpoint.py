@@ -41,7 +41,7 @@ def pandas_join_key_dual(left_df, right_df, left_key, right_key, how):
     # validate='one_to_many')
 
     logging.info(f"Join result\n{joined_df._merge.value_counts()}")
-    #joined_df = joined_df.drop("_merge", axis=1)
+    # joined_df = joined_df.drop("_merge", axis=1)
 
     logging.info(f"joined df: {joined_df.shape}")
 

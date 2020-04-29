@@ -1,0 +1,7 @@
+include *.txt
+include *.md
+recursive-include ./tekkieworden/*
+
+include ./requirements.txt
+
+recursive-exclude * __pycache__

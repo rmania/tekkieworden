@@ -21,7 +21,7 @@ from config import DUO_HBO_CSV, DUO_WO_CSV
 PATH_TO_RAW_DATA = "../../../data/raw/"
 
 
-def prepare_sdb_opleidingen_file(path, file, data_quality_report= None):
+def prepare_sdb_opleidingen_file(path, file, data_quality_report=None):
     """
     Read in the Studiekeuze excel Opleidingen Sheet
     TODO: needs to point to the API calls
@@ -30,12 +30,14 @@ def prepare_sdb_opleidingen_file(path, file, data_quality_report= None):
     :return: formatted SDB file
     """
     df = pd.read_excel(path + file, sheet_name="Opleidingen")
-    
+
     if data_quality_report:
-        
+
         sdb_profile_report = pdp.ProfileReport(sdb_all)
-        sdb_profile_report.to_file("../../../docs/data_quality_report/" + "sdb_data_quality_report.html")
-    
+        sdb_profile_report.to_file(
+            "../../../docs/data_quality_report/" + "sdb_data_quality_report.html"
+        )
+
     logging.info(f"dropping columns: \n {drop_studiekeuze_cols}")
     for col in drop_studiekeuze_cols:
         df = df.drop(col, axis=1)
@@ -50,8 +52,8 @@ def prepare_sdb_opleidingen_file(path, file, data_quality_report= None):
     for col in str_cols:
         df[col] = df[col].astype(str)
     df["soortopleiding_sdb"] = df["soortopleiding_sdb"].str.lower()  # like in DUO file
-    df['soortho_sdb'] = df['soortho_sdb'].apply(lambda x: x.lower()) # like in DUO file
-    
+    df["soortho_sdb"] = df["soortho_sdb"].apply(lambda x: x.lower())  # like in DUO file
+
     # cat opleidingsvormen into one column
     df["opleidingsvorm_sdb"] = np.where(
         df.voltijd_sdb == 1,
@@ -196,7 +198,8 @@ def clean_string_fields(x):
         .replace("'", "")
         .replace("“", "")
         .replace("”", "")
-        .replace("—", ""))
+        .replace("—", "")
+    )
     x = "".join(word for word in x if word not in punctuation)
     x = word_tokenize(x)
     x = " ".join(word for word in x if word not in stopwords_nl)
