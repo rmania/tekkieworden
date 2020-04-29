@@ -1,0 +1,18 @@
+action: py37, msg: installpkg
+cwd: /home/dmeijerink/pathe/tekkieworden
+cmd: /home/dmeijerink/pathe/tekkieworden/.tox/py37/bin/pip install --pre --no-deps -U .tox/.tmp/package/1/tekkieworden-about-version-.zip
+Processing ./.tox/.tmp/package/1/tekkieworden-about-version-.zip
+Building wheels for collected packages: tekkieworden
+  Building wheel for tekkieworden (setup.py): started
+  Building wheel for tekkieworden (setup.py): finished with status 'done'
+  Created wheel for tekkieworden: filename=tekkieworden-about_version_-py3-none-any.whl size=2806 sha256=41a8d183155df56a671df8c37a739aa440eb3d6abc95efdfeb057c2af139d58f
+  Stored in directory: /home/dmeijerink/.cache/pip/wheels/4b/3f/38/8a59a82dfd71e675132c40adbec11a43ca6b9db6ba760e9aca
+Successfully built tekkieworden
+Installing collected packages: tekkieworden
+  Attempting uninstall: tekkieworden
+    Found existing installation: tekkieworden about-version-
+    Uninstalling tekkieworden-about-version-:
+      Successfully uninstalled tekkieworden-about-version-
+Successfully installed tekkieworden-about-version-
+WARNING: You are using pip version 20.0.2; however, version 20.1 is available.
+You should consider upgrading via the '/home/dmeijerink/pathe/tekkieworden/.tox/py37/bin/python -m pip install --upgrade pip' command.

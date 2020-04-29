@@ -1,14 +1,15 @@
 from pathlib import Path
 
-PROJECT_ROOT = Path(
-    __file__
-).parent.parent.parent  # Assume this file lives in /tekkieworden/
+import tekkieworden
+
+# Assume PROJECT_ROOT = /tekkieworden/src/tekkieworden
+PROJECT_ROOT = Path(tekkieworden.__file__).resolve().parent
 
 # General paths
-PATH_TO_RAW_DATA = PROJECT_ROOT / "data/raw/"
-PATH_TO_MUNGED_DATA = PROJECT_ROOT / "data/munged/"
-PATH_TO_FINAL_DATA = PROJECT_ROOT / "data/final/"
-PATH_TO_DATA_QUALITY_REPORT = PROJECT_ROOT / "docs/data_quality_report/"
+PATH_TO_RAW_DATA = PROJECT_ROOT / "../../data/raw/"
+PATH_TO_MUNGED_DATA = PROJECT_ROOT / "../../data/munged/"
+PATH_TO_FINAL_DATA = PROJECT_ROOT / "../../data/final/"
+PATH_TO_DATA_QUALITY_REPORT = PROJECT_ROOT / "../../docs/data_quality_report/"
 
 # url + csv filenames for Hoger Onderwijs Ingeschrevenen from DUO.nl
 HBO_CSV_URL = "https://duo.nl/open_onderwijsdata/images/03b-eerstejaars-ingeschrevenen-hbo-domein-hbo-2019.csv"

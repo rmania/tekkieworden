@@ -1,0 +1,51 @@
+action: GLOB, msg: packaging
+cwd: /home/dmeijerink/pathe/tekkieworden
+cmd: /home/dmeijerink/pathe/tekkieworden/venv/bin/python setup.py sdist --formats=zip --dist-dir /home/dmeijerink/pathe/tekkieworden/.tox/dist
+running sdist
+running egg_info
+writing src/tekkieworden.egg-info/PKG-INFO
+writing dependency_links to src/tekkieworden.egg-info/dependency_links.txt
+writing requirements to src/tekkieworden.egg-info/requires.txt
+writing top-level names to src/tekkieworden.egg-info/top_level.txt
+reading manifest file 'src/tekkieworden.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+/home/dmeijerink/pathe/tekkieworden/venv/lib/python3.7/site-packages/setuptools/dist.py:472: UserWarning: The version specified ("about['__version__']") is an invalid version, this may not work as expected with newer versions of setuptools, pip, and PyPI. Please see PEP 440 for more details.
+  "details." % version
+warning: manifest_maker: MANIFEST.in, line 3: 'recursive-include' expects <dir> <pattern1> <pattern2> ...
+
+warning: no previously-included files matching '__pycache__' found under directory '*'
+writing manifest file 'src/tekkieworden.egg-info/SOURCES.txt'
+running check
+warning: check: missing required meta-data: url
+
+creating tekkieworden-about-version-
+creating tekkieworden-about-version-/src
+creating tekkieworden-about-version-/src/tekkieworden.egg-info
+copying files to tekkieworden-about-version-...
+copying MANIFEST.in -> tekkieworden-about-version-
+copying README.md -> tekkieworden-about-version-
+copying requirements.txt -> tekkieworden-about-version-
+copying setup.py -> tekkieworden-about-version-
+copying src/tekkieworden.egg-info/PKG-INFO -> tekkieworden-about-version-/src/tekkieworden.egg-info
+copying src/tekkieworden.egg-info/SOURCES.txt -> tekkieworden-about-version-/src/tekkieworden.egg-info
+copying src/tekkieworden.egg-info/dependency_links.txt -> tekkieworden-about-version-/src/tekkieworden.egg-info
+copying src/tekkieworden.egg-info/requires.txt -> tekkieworden-about-version-/src/tekkieworden.egg-info
+copying src/tekkieworden.egg-info/top_level.txt -> tekkieworden-about-version-/src/tekkieworden.egg-info
+Writing tekkieworden-about-version-/setup.cfg
+creating /home/dmeijerink/pathe/tekkieworden/.tox/dist
+creating '/home/dmeijerink/pathe/tekkieworden/.tox/dist/tekkieworden-about-version-.zip' and adding 'tekkieworden-about-version-' to it
+adding 'tekkieworden-about-version-'
+adding 'tekkieworden-about-version-/src'
+adding 'tekkieworden-about-version-/README.md'
+adding 'tekkieworden-about-version-/PKG-INFO'
+adding 'tekkieworden-about-version-/MANIFEST.in'
+adding 'tekkieworden-about-version-/setup.cfg'
+adding 'tekkieworden-about-version-/requirements.txt'
+adding 'tekkieworden-about-version-/setup.py'
+adding 'tekkieworden-about-version-/src/tekkieworden.egg-info'
+adding 'tekkieworden-about-version-/src/tekkieworden.egg-info/PKG-INFO'
+adding 'tekkieworden-about-version-/src/tekkieworden.egg-info/top_level.txt'
+adding 'tekkieworden-about-version-/src/tekkieworden.egg-info/requires.txt'
+adding 'tekkieworden-about-version-/src/tekkieworden.egg-info/dependency_links.txt'
+adding 'tekkieworden-about-version-/src/tekkieworden.egg-info/SOURCES.txt'
+removing 'tekkieworden-about-version-' (and everything under it)

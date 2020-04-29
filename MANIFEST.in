@@ -1,6 +1,6 @@
 include *.txt
 include *.md
-recursive-include ./tekkieworden/*
+recursive-include ./src/tekkieworden/*
 
 include ./requirements.txt
 

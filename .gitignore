@@ -39,3 +39,6 @@ MANIFEST
 data/raw/.
 data/munged/.
 data/final/.
+
+# tox files
+.tox/

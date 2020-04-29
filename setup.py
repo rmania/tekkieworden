@@ -13,7 +13,8 @@ DESCRIPTION = 'Project to analyse the gap in tech talent in the Netherlands'
 URL = 'https://github.com/rmania/tekkieworden'
 EMAIL = 'd.meijerink@braxwell.com'
 AUTHOR = 'Diederik Meijerink'
-REQUIRES_PYTHON = '>=3.6.0'
+REQUIRES_PYTHON = '>=3.7.3'
+
 
 # Packages that are required for this module to be executed
 def list_reqs(fname='requirements.txt'):
