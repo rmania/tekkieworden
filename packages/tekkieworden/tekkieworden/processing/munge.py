@@ -8,6 +8,7 @@ import pandas_profiling as pdp
 from typing import List
 
 from tekkieworden.config import config
+from tekkieworden.processing.writers import write_df_csv
 from tekkieworden.processing.utilities import pandas_join_key_dual
 
 
@@ -255,7 +256,7 @@ def merge_duo_sdb_files(duo_file, sdb_file) -> pd.DataFrame:
     return df
 
 
-def tag_tech_studies(input_df: pd.DataFrame, tech_keywords=List[str]):
+def tag_tech_studies(input_df: pd.DataFrame, tech_keywords=List[str]) -> pd.DataFrame:
     """
     create a tech keywords column to filter on
     :param input_df:
@@ -281,4 +282,10 @@ def tag_tech_studies(input_df: pd.DataFrame, tech_keywords=List[str]):
 
 
 if __name__ == "__main__":
-    prepare_sdb_opleidingen_file(path=config.PATH_TO_RAW_DATA, file=config.SDB_FILE)
+    sdb = prepare_sdb_opleidingen_file(path=config.PATH_TO_RAW_DATA,
+                                       file=config.SDB_FILE,
+                                       data_quality_report=None)
+    duo = concat_unstack_duo_ho_files(years=[2015, 2016, 2017, 2018, 2019])
+    df = merge_duo_sdb_files(duo_file=duo, sdb_file=sdb)
+    df = tag_tech_studies(input_df=df, tech_keywords=config.tech_keywords)
+    write_df_csv(input_df=df)
