@@ -1,0 +1,10 @@
+# Get token
+curl  -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=client_credentials&client_id=XXX&client_secret=XXX"
+-X POST https://token.studiekeuzedatabase.nl/token
+
+# get data with BEARER Access token XXX
+curl  -H "Authorization: Bearer XXX " https://api.studiekeuzedatabase.nl/Studiekeuzedatabase.svc/
+
+# use refresh token for new access token
+curl  -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=refresh_token&refresh_token=XXX&client_id=XXX"
+-X POST https://token.studiekeuzedatabase.nl/token
