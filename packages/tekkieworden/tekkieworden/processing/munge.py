@@ -287,5 +287,5 @@ if __name__ == "__main__":
                                        data_quality_report=None)
     duo = concat_unstack_duo_ho_files(years=[2015, 2016, 2017, 2018, 2019])
     df = merge_duo_sdb_files(duo_file=duo, sdb_file=sdb)
-    df = tag_tech_studies(input_df=df, tech_keywords=config.tech_keywords)
-    write_df_csv(input_df=df)
+    # df = tag_tech_studies(input_df=df, tech_keywords=config.tech_keywords)
+    write_df_csv(input_df=df, filename="test.csv")
