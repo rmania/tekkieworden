@@ -32,7 +32,7 @@ def prepare_sdb_opleidingen_file(path, file: str,
         logging.info(
             f"Generating Data quality report. Storing : {config.PATH_TO_DATA_QUALITY_REPORT}"
         )
-        sdb_profile_report = pdp.ProfileReport(sdb_all)
+        sdb_profile_report = pdp.ProfileReport(df)
         sdb_profile_report.to_file(
             config.PATH_TO_DATA_QUALITY_REPORT + "sdb_data_quality_report.html"
         )
@@ -76,7 +76,7 @@ def prepare_duo_ho_files(path, file: str, ho_type: str) -> pd.DataFrame:
     :param ho_type: hbo or wo. Adds adequate column to dataset
     :return: formatted DUO file
     """
-    df = pd.read_csv(path + file, sep=";")
+    df = pd.read_csv(os.path.join(str(path), file), sep=";")
     df.columns = df.columns.str.lower().str.replace(" ", "_")
     for c in ["gemeentenummer", "opleidingscode_actueel"]:
         df[c] = df[c].map("{:.0f}".format).astype(str)
