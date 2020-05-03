@@ -8,6 +8,7 @@ import pandas_profiling as pdp
 from typing import List
 
 from tekkieworden.config import config
+from tekkieworden.processing.readers import open_tech_label_yaml
 from tekkieworden.processing.writers import write_df_csv
 from tekkieworden.processing.utilities import pandas_join_key_dual
 
@@ -258,7 +259,7 @@ def merge_duo_sdb_files(duo_file, sdb_file) -> pd.DataFrame:
 
 def tag_tech_studies(input_df: pd.DataFrame, tech_keywords=List[str]) -> pd.DataFrame:
     """
-    create a tech keywords column to filter on
+    create a tech keywords column based on a tech_keywords list in config file
     :param input_df:
     :param tech_keywords: list of tech keyword strings
     :return: pd.DataFrame with additional tech_keyword column to filter on
@@ -273,12 +274,27 @@ def tag_tech_studies(input_df: pd.DataFrame, tech_keywords=List[str]) -> pd.Data
 
     logging.info(f"Searching for tech keywords in : {cols_to_check}")
     for c in cols_to_check:
-        df["tech_keyword"] = df[c].str.findall(
+        input_df["tech_keyword"] = input_df[c].str.findall(
             r"|".join(config.tech_keywords), flags=re.IGNORECASE
         )
-        df["tech_keyword"] = df.tech_keyword.apply(", ".join)
+    input_df["tech_keyword"] = input_df.tech_keyword.apply(", ".join)
+    input_df["tech_keyword"] = input_df["tech_keyword"].apply(lambda x: x.lower())
 
-    return df
+    return input_df
+
+
+def label_tech_studies(input_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    create a tech_label column based on a mapping in the tech_label.yml
+    :param input_df: pd.Dataframe
+    :return: pd.DataFrame with additional tech_label column to filter on
+    """
+    tech_label_dict = open_tech_label_yaml()['tech']
+    input_df['tech_label'] = input_df['opleidingsnaam_duo'].map(tech_label_dict)
+    # tricky CHECK with TEKKIEWORDEN!
+    input_df['tech_label'] = input_df['tech_label'].fillna("no_tech")
+
+    return input_df
 
 
 if __name__ == "__main__":
@@ -287,5 +303,6 @@ if __name__ == "__main__":
                                        data_quality_report=None)
     duo = concat_unstack_duo_ho_files(years=[2015, 2016, 2017, 2018, 2019])
     df = merge_duo_sdb_files(duo_file=duo, sdb_file=sdb)
-    # df = tag_tech_studies(input_df=df, tech_keywords=config.tech_keywords)
+    df = merge_duo_sdb_files(duo_file=duo, sdb_file=sdb)
+    df = tag_tech_studies(input_df=df, tech_keywords=config.tech_keywords)
     write_df_csv(input_df=df, filename="test.csv")

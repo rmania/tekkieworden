@@ -46,4 +46,9 @@ Install the `TEKKIEWORDEN` package
  
  `tox -e install_locally`
  
+ To also have access to the tekkieworden virtual env in Jupyter Notebooks or Lab:
+ - `pip install ipykernel`
+ - `python -m ipykernel install --user --name tekkieworden --display-name "tekkieworden"`
+ 
+ 
  

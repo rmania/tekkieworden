@@ -17,16 +17,20 @@ PATH_TO_CONFIG = PACKAGE_ROOT / "config"
 PATH_TO_DATA_QUALITY_REPORT = PACKAGE_ROOT / "docs/data_quality_report/"
 
 # url + csv filenames for Hoger Onderwijs Ingeschrevenen from DUO.nl
+MBO_CSV_URL = "https://duo.nl/open_onderwijsdata/images/08-deelnemers-per-instelling-bestuur-gemeente-kenniscentrum-sector-bedrijfstak-type-mbo-opleiding-verblijfsjaar-2015-2019.csv"
 HBO_CSV_URL = "https://duo.nl/open_onderwijsdata/images/03b-eerstejaars-ingeschrevenen-hbo-domein-hbo-2019.csv"
 WO_CSV_URL = "https://duo.nl/open_onderwijsdata/images/03b-eerstejaars-ingeschrevenen-wo-domein-wo-2019.csv"
 
 # files
-SDB_FILE = "studiekeuze123_all_20200417.xlsx"
-HBO_FILE = "hbo_inscriptions"
-WO_FILE = "wo_inscriptions"
-DUO_HBO_CSV = "hbo_inscriptions_2019.csv"
-DUO_WO_CSV = "wo_inscriptions_2019.csv"
 FILE_YEAR = 2019
+SDB_FILE = "studiekeuze123_all_20200417.xlsx"
+DUO_MBO_FILE = "mbo_inscriptions"
+DUO_HBO_FILE = "hbo_inscriptions"
+DUO_WO_FILE = "wo_inscriptions"
+DUO_MBO_CSV = f"mbo_inscriptions_{FILE_YEAR}.csv"
+DUO_HBO_CSV = f"hbo_inscriptions_{FILE_YEAR}.csv"
+DUO_WO_CSV = f"wo_inscriptions_{FILE_YEAR}.csv"
+
 
 # studiekeuze123_all_20200417.xlsx columns to be dropped
 drop_studiekeuze_cols = [
@@ -104,9 +108,9 @@ drop_studiekeuze_cols = [
 # mogelijke keywords om techstudies te filteren
 tech_keywords = [
     "data",
-    "Intelligence",
-    "Data Science",
-    "Kunstmatige Intelligentie",
+    "intelligence",
+    "data science",
+    "kunstmatige intelligentie",
     "computer science",
     "analytic",
     "analist",

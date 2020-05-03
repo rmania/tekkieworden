@@ -43,6 +43,7 @@ tech:
   Arts & Crafts: no_tech
   Arts - Klinisch Onderzoeker (research): no_tech
   Astronomy: no_tech
+  Astronomy and Astrophysics: no_tech
   Automotive: no_tech
   Automotive Technology: no_tech
   Autonome Beeldende Kunst: no_tech
@@ -66,12 +67,14 @@ tech:
   Bio-Farmaceutische Wetenschappen: no_tech
   Bio-Pharmaceutical Sciences: no_tech
   Bio-informatica: tech
+  Biobased Materials: no_tech
   Biobased Sciences: no_tech
   Bioinformatics: tech
   Bioinformatics and Systems Biology (joint degree): no_tech
   Biological Sciences: no_tech
   Biologie: no_tech
   Biologie en Medisch Laboratoriumonderzoek: no_tech
+  Biologische Wetenschappen: no_tech
   Biology: no_tech
   Biomedical Engineering: no_tech
   Biomedical Sciences: no_tech
@@ -142,9 +145,11 @@ tech:
   Communication, Health and Life Sciences: no_tech
   Community Development: no_tech
   Complex Systems Engineering and Management: tech
+  Computational Science: tech
   Computational Science (joint degree): tech
   Computer Engineering: tech
   Computer Science: tech
+  Computer Science (joint degree): tech
   Computer Science and Engineering: tech
   Computing Science: tech
   Conflict Resolution and Governance: no_tech
@@ -175,10 +180,12 @@ tech:
   DAS Creative Producing: no_tech
   Dans: no_tech
   Data Science (joint degree): tech
+  Data Science and Entrepreneurship (joint degree): tech
   Data Science and Knowledge Engineering: tech
   Data Science and Society: tech
   Data Science for Decision Making: tech
   Data Science for Life Sciences: tech
+  Data-driven Design: tech
   Design Driven Innovation: no_tech
   Design for Interaction: designer
   Development Studies: no_tech
@@ -191,12 +198,14 @@ tech:
   Digital Design: tech
   Digital Driven Business: tech
   Digital Society: no_tech
+  Digitale Innovatie in Zorg en Welzijn: no_tech
   Docent Beeldende Kunst en Vormgeving: no_tech
   Docent Dans: no_tech
   Docent Muziek: no_tech
   Docent Theater: no_tech
   Drug Discovery and Safety: no_tech
   Duitse Taal en Cultuur: no_tech
+  Duurzame Watertechnologie: no_tech
   Earth Sciences: no_tech
   Earth and Environment: no_tech
   Ecology: no_tech
@@ -242,6 +251,7 @@ tech:
   Engelse Taal en Cultuur: no_tech
   Engineering: no_tech
   Engineering Systems: tech
+  Engineering and Policy Analysis: tech
   English Language and Culture: no_tech
   Entrepreneurship (joint degree): no_tech
   Environment and Resource Management: no_tech
@@ -265,6 +275,7 @@ tech:
   European Public Health: no_tech
   European Studies: no_tech
   European Studies (research): no_tech
+  European Studies on Society, Science and Technology: tech
   Europese Studies: no_tech
   Europese Studies (joint degree): no_tech
   Europese Talen en Culturen: no_tech
@@ -319,6 +330,7 @@ tech:
   Geschiedenis (research): no_tech
   Gezondheid en Leven: no_tech
   Gezondheid en Maatschappij: no_tech
+  Gezondheidsinnovatie: no_tech
   Gezondheidsrecht: no_tech
   Gezondheidswetenschappen: no_tech
   Gezondheidszorgpsychologie: no_tech
@@ -389,6 +401,8 @@ tech:
   Information Science: tech
   Information Sciences: tech
   Information Studies: tech
+  Information and Network Economics: tech
+  Innovatie in Zorg en Welzijn: no_tech
   Innovation Management: no_tech
   Innovation Sciences: no_tech
   Innovative Dairy Chain Management: no_tech
@@ -407,6 +421,7 @@ tech:
   International Business Law: no_tech
   International Business Taxation: no_tech
   International Business and Management: no_tech
+  International Business and Management Studies: no_tech
   International Commercial Law: no_tech
   International Crimes, Conflict and Criminology: no_tech
   International Criminal Law: no_tech
@@ -432,6 +447,7 @@ tech:
   Internationale Betrekkingen en Internationale Organisatie: no_tech
   Internationale Ontwikkelingsstudies: no_tech
   Internationale betrekkingen: no_tech
+  Internet Science and Technology: tech
   Islam en Arabisch: no_tech
   Italiaanse Taal en Cultuur: no_tech
   Japanstudies: no_tech
@@ -485,14 +501,33 @@ tech:
   Leraar Natuurkunde: no_tech
   Leraar Nederlands: no_tech
   Leraar Scheikunde: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Aardrijkskunde: no_tech
   Leraar Voorbereidend Hoger Onderwijs in Algemene Economie: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Arabisch: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Biologie: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Duits: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Engels: no_tech
   Leraar Voorbereidend Hoger Onderwijs in Filosofie: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Frans: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Geschiedenis en Staatsinrichting: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Godsdienst en Levensbeschouwing: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Griekse en Latijnse Taal en Cultuur: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Italiaans: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Kunstgeschiedenis en Culturele en Kunstzinnige Vorming/Kunst Algemeen: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Latijnse Taal en Cultuur: no_tech
   Leraar Voorbereidend Hoger Onderwijs in Maatschappijleer en Maatschappijwetenschappen: no_tech
   Leraar Voorbereidend Hoger Onderwijs in Management en Organisatie: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Muziek: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Natuurkunde: no_tech
   Leraar Voorbereidend Hoger Onderwijs in Nederlands: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Russisch: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Scheikunde: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Spaans: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in Wiskunde: no_tech
   Leraar Voorbereidend Hoger Onderwijs in de Betawetenschappen: no_tech
   Leraar Voorbereidend Hoger Onderwijs in de Mens- en Maatschappijwetenschappen: no_tech
   Leraar Voorbereidend Hoger Onderwijs in de Taal- en cultuurwetenschappen: no_tech
+  Leraar Voorbereidend Hoger Onderwijs in de Taalvakken: no_tech
   Leraar Wiskunde: no_tech
   Leren en Innoveren: no_tech
   Letterkunde: no_tech
@@ -503,6 +538,8 @@ tech:
   Lichamelijke Opvoeding en Sportpedagogiek: no_tech
   Life Science and Technology: no_tech
   Life Science and Technology (joint degree): no_tech
+  Life Sciences: no_tech
+  Lifestyle Informatics: tech
   Linguistics and Communication Sciences (research): no_tech
   Literatuur en Samenleving: no_tech
   Literatuurwetenschap: no_tech
@@ -543,7 +580,9 @@ tech:
   Master of Arts Therapies: no_tech
   Master of Arts in Fine Art and Design: no_tech
   Master of Music Therapy: no_tech
+  Master of Urban and Area Development (joint degree): no_tech
   Materials Science and Engineering: no_tech
+  Mathematical Physics: no_tech
   Mathematics: no_tech
   Mathematische Wetenschappen: no_tech
   Mechanical Engineering: no_tech
@@ -576,10 +615,12 @@ tech:
   Milieukunde: no_tech
   Minorities & Multilingualism: no_tech
   Moleculaire Levenswetenschappen: no_tech
+  Molecular Biology and Biotechnology: no_tech
   Molecular Life Sciences: no_tech
   Molecular Mechanisms of Disease (research): no_tech
   Molecular Medicine (research): no_tech
   Molecular Medicine and Innovative Treatment: no_tech
+  Molecular Science and Technology: no_tech
   Molecular Science and Technology (joint degree): no_tech
   Mondzorgkunde: no_tech
   Multidisciplinary Economics (research): no_tech
@@ -594,6 +635,7 @@ tech:
   Natuur- en Sterrenkunde: no_tech
   Natuur- en Sterrenkunde (joint degree): no_tech
   Natuurkunde: no_tech
+  Natuurkunde en Meteorologie & Fysische Oceanografie: no_tech
   Natuurwetenschap en Innovatiemanagement: no_tech
   Natuurwetenschappen en Bedrijf: no_tech
   Nederlandkunde/Dutch Studies: no_tech
@@ -605,6 +647,7 @@ tech:
   Neuroscience (research): no_tech
   Neuroscience and Cognition: no_tech
   Neurosciences (research): no_tech
+  Next Level Engineering: tech
   Nieuwgriekse Taal en Cultuur: no_tech
   Noord-Amerika Studies: no_tech
   Notarieel Recht: no_tech
@@ -638,7 +681,13 @@ tech:
   Opleiding tot Oefentherapeut-Mensendieck: no_tech
   Opleiding tot Verpleegkundige: no_tech
   Opleiding tot leraar Basisonderwijs: no_tech
+  Opleiding tot leraar voortgezet onderwijs van de eerste graad in Duitse Taal en Cultuur: no_tech
+  Opleiding tot leraar voortgezet onderwijs van de eerste graad in Engelse Taal en Cultuur: no_tech
+  Opleiding tot leraar voortgezet onderwijs van de eerste graad in Franse Taal en Cultuur: no_tech
   Opleiding tot leraar voortgezet onderwijs van de eerste graad in Godsdienst en Levensbeschouwing: no_tech
+  Opleiding tot leraar voortgezet onderwijs van de eerste graad in Griekse en Latijnse Taal en Cultuur: no_tech
+  Opleiding tot leraar voortgezet onderwijs van de eerste graad in Nederlandse Taal en Cultuur: no_tech
+  Opleiding tot leraar voortgezet onderwijs van de eerste graad in Spaanse Taal en Cultuur: no_tech
   Opleiding tot leraar voortgezet onderwijs van de tweede graad in Aardrijkskunde: no_tech
   Opleiding tot leraar voortgezet onderwijs van de tweede graad in Algemene Economie: no_tech
   Opleiding tot leraar voortgezet onderwijs van de tweede graad in Bedrijfseconomie: no_tech
@@ -687,6 +736,7 @@ tech:
   Pedagogy and Education: no_tech
   Performing Public Space: no_tech
   Personeelwetenschappen: no_tech
+  Pharmaceutical Sciences: no_tech
   Philosophy of Science, Technology and Society: no_tech
   Philosophy, Politics & Economics: no_tech
   Philosophy, Politics and Economics: no_tech
@@ -786,6 +836,7 @@ tech:
   Speltherapie: no_tech
   Sport Sciences: no_tech
   Sport, Gezondheid en Management: no_tech
+  Sport- en Beweeginnovatie: no_tech
   Sportkunde: no_tech
   Stedenbouw: no_tech
   Sterrenkunde: no_tech
@@ -808,6 +859,7 @@ tech:
   Tandheelkunde: no_tech
   Technical Computer Science: tech
   Technical Medicine: no_tech
+  Technical Medicine (joint degree): no_tech
   Technische Aardwetenschappen: no_tech
   Technische Bedrijfskunde: no_tech
   Technische Bestuurskunde: no_tech
@@ -834,6 +886,7 @@ tech:
   Toegepaste Wiskunde: no_tech
   Toetsdeskundige: no_tech
   Togamaster: no_tech
+  Tourism (joint degree): no_tech
   Tourism Destination Management: no_tech
   Tourism Management: no_tech
   Tourism, Society and Environment: no_tech
@@ -853,6 +906,7 @@ tech:
   Verloskunde: no_tech
   Vertaalacademie: no_tech
   Vertaalwetenschap: no_tech
+  Victimology and Criminal Justice: no_tech
   Vitality and Ageing: no_tech
   Voeding en Dietetiek: no_tech
   Voeding en Gezondheid: no_tech
