@@ -16,6 +16,7 @@ PATH_TO_FINAL_DATA = PACKAGE_ROOT / "datasets/final/"
 PATH_TO_CONFIG = PACKAGE_ROOT / "config"
 PATH_TO_DATA_QUALITY_REPORT = PACKAGE_ROOT / "docs/data_quality_report/"
 PATH_TO_GAP_REPORT =  PACKAGE_ROOT / "gap_report"
+PATH_TO_CSS_FILES = PACKAGE_ROOT / "app/"
 
 # url + csv filenames for Hoger Onderwijs Ingeschrevenen from DUO.nl
 MBO_CSV_URL = "https://duo.nl/open_onderwijsdata/images/08-deelnemers-per-instelling-bestuur-gemeente-kenniscentrum-sector-bedrijfstak-type-mbo-opleiding-verblijfsjaar-2015-2019.csv"
