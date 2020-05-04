@@ -4,6 +4,7 @@ import argparse
 from jinja2 import Environment, FileSystemLoader
 
 from weasyprint import HTML
+from weasyprint.fonts import FontConfiguration
 
 from tekkieworden.config import config
 from tekkieworden.processing.visual_helpers import create_spark_charts
@@ -41,19 +42,18 @@ def create_PDF_report(input_df, output_file):
     template = env.get_template("gap_report.html")
     html_out = template.render(template_vars)
     font_config = FontConfiguration()
-    HTML(string=html_out).write_pdf(str(config.PATH_TO_GAP_REPORT) + output_file,
+    print(config.PATH_TO_GAP_REPORT)
+    HTML(string=html_out).write_pdf(str(config.PATH_TO_GAP_REPORT) + "/" + output_file,
                                     stylesheets=[str(config.PATH_TO_CSS_FILES) + "/style.css"],
                                     font_config=font_config)
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Generate GAP report')
-    parser.add_argument('output_file', type=argparse.FileType('w'),
-                        help="GAP output file in PDF")
-    args = parser.parse_args()
+def main():
     # Read in the file and get our pivot table summary
-    df = read_tech_file(str(config.PATH_TO_MUNGED_DATA, file = "/opleidingen_tech_filtered.csv"))
+    df = read_tech_file(str(config.PATH_TO_MUNGED_DATA), file="opleidingen_tech_filtered.csv")
     df_tech_report = add_spark_charts(input_df=df)
-    create_PDF_report(input_df=df_tech_report, output_file=args.output_file.name)
+    create_PDF_report(input_df=df_tech_report, output_file="gap_report.pdf")
 
 
+if __name__ == "__main__":
+    main()
