@@ -6,7 +6,7 @@ from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML
 
 from tekkieworden.config import config
-from tekkieworden.visual_helpers import create_spark_charts
+from tekkieworden.processing.visual_helpers import create_spark_charts
 
 
 _logger = logging.getLogger(__name__)
