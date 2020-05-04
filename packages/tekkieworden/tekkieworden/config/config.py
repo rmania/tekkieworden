@@ -8,13 +8,14 @@ import pandas as pd
 pd.options.display.max_rows = 10
 pd.options.display.max_columns = 10
 
-
+# paths
 PACKAGE_ROOT = pathlib.Path(tekkieworden.__file__).resolve().parent
 PATH_TO_RAW_DATA = PACKAGE_ROOT / "datasets/raw/"
 PATH_TO_MUNGED_DATA = PACKAGE_ROOT / "datasets/munged/"
 PATH_TO_FINAL_DATA = PACKAGE_ROOT / "datasets/final/"
 PATH_TO_CONFIG = PACKAGE_ROOT / "config"
 PATH_TO_DATA_QUALITY_REPORT = PACKAGE_ROOT / "docs/data_quality_report/"
+PATH_TO_GAP_REPORT =  PACKAGE_ROOT / "gap_report"
 
 # url + csv filenames for Hoger Onderwijs Ingeschrevenen from DUO.nl
 MBO_CSV_URL = "https://duo.nl/open_onderwijsdata/images/08-deelnemers-per-instelling-bestuur-gemeente-kenniscentrum-sector-bedrijfstak-type-mbo-opleiding-verblijfsjaar-2015-2019.csv"

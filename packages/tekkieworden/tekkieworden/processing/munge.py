@@ -297,12 +297,25 @@ def label_tech_studies(input_df: pd.DataFrame) -> pd.DataFrame:
     return input_df
 
 
+def filter_tech_studies(input_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Filter the prepared duo, sdb file on tech studies using either the tech_label
+    colomn or the tech_keyword column
+    :return: filtered pd.DataFrame with ony tech-related studies
+    """
+    tech_filtered_df = input_df.query("tech_label != 'no_tech'")
+    logging.info(f"Shape of tech-filtered DataFrame: {tech_filtered_df.shape}")
+
+    return tech_filtered_df
+
+
 if __name__ == "__main__":
     sdb = prepare_sdb_opleidingen_file(path=config.PATH_TO_RAW_DATA,
                                        file=config.SDB_FILE,
                                        data_quality_report=None)
     duo = concat_unstack_duo_ho_files(years=[2015, 2016, 2017, 2018, 2019])
     df = merge_duo_sdb_files(duo_file=duo, sdb_file=sdb)
-    df = merge_duo_sdb_files(duo_file=duo, sdb_file=sdb)
     df = tag_tech_studies(input_df=df, tech_keywords=config.tech_keywords)
-    write_df_csv(input_df=df, filename="test.csv")
+    write_df_csv(input_df=df, filename="opleidingen_total_munged.csv")
+    tech_filtered_df = filter_tech_studies(input_df=df)
+    write_df_csv(input_df=tech_filtered_df, filename="opleidingen_tech_filtered.csv")
