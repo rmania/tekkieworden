@@ -15,7 +15,7 @@ PATH_TO_MUNGED_DATA = PACKAGE_ROOT / "datasets/munged/"
 PATH_TO_FINAL_DATA = PACKAGE_ROOT / "datasets/final/"
 PATH_TO_CONFIG = PACKAGE_ROOT / "config"
 PATH_TO_DATA_QUALITY_REPORT = PACKAGE_ROOT / "docs/data_quality_report/"
-PATH_TO_GAP_REPORT =  PACKAGE_ROOT / "gap_report/"
+PATH_TO_GAP_REPORT = PACKAGE_ROOT / "gap_report/"
 PATH_TO_CSS_FILES = PACKAGE_ROOT / "app/"
 
 # url + csv filenames for Hoger Onderwijs Ingeschrevenen from DUO.nl

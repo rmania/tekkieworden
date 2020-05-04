@@ -17,7 +17,15 @@ def download_student_inscriptions(url, file: str):
     """
     response = requests.get(url)
     print(f"Downloading: {file}, writing to {config.PATH_TO_RAW_DATA}")
-    with open(str(config.PATH_TO_RAW_DATA) + "/" + file + "_" + str(config.FILE_YEAR) + ".csv", "w") as f:
+    with open(
+        str(config.PATH_TO_RAW_DATA)
+        + "/"
+        + file
+        + "_"
+        + str(config.FILE_YEAR)
+        + ".csv",
+        "w",
+    ) as f:
         writer = csv.writer(f)
         for line in response.iter_lines():
             writer.writerow(line.decode("ISO-8859-1").split(","))

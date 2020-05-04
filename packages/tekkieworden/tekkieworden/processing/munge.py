@@ -16,8 +16,9 @@ from tekkieworden.processing.utilities import pandas_join_key_dual
 _logger = logging.getLogger(__name__)
 
 
-def prepare_sdb_opleidingen_file(path, file: str,
-                                 data_quality_report=None) -> pd.DataFrame:
+def prepare_sdb_opleidingen_file(
+    path, file: str, data_quality_report=None
+) -> pd.DataFrame:
     """
     Read in the Studiekeuze excel Opleidingen Sheet
     TODO: needs to point to the API calls
@@ -127,12 +128,16 @@ def concat_unstack_duo_ho_files(years=List[int]) -> pd.DataFrame:
     :return: pivoted DUO file with summed inscriptions
     """
 
-    hbo = prepare_duo_ho_files(path=config.PATH_TO_RAW_DATA,
-                               file=config.DUO_HBO_CSV, ho_type="hbo")
-    wo = prepare_duo_ho_files(path=config.PATH_TO_RAW_DATA,
-                              file=config.DUO_WO_CSV, ho_type="wo")
+    hbo = prepare_duo_ho_files(
+        path=config.PATH_TO_RAW_DATA, file=config.DUO_HBO_CSV, ho_type="hbo"
+    )
+    wo = prepare_duo_ho_files(
+        path=config.PATH_TO_RAW_DATA, file=config.DUO_WO_CSV, ho_type="wo"
+    )
     duo = pd.concat([wo, hbo], axis=0)
-    logging.info(f"Concatting {config.DUO_HBO_CSV, config.DUO_WO_CSV}\n. Duo file shape: {duo.shape}")
+    logging.info(
+        f"Concatting {config.DUO_HBO_CSV, config.DUO_WO_CSV}\n. Duo file shape: {duo.shape}"
+    )
 
     gemeentes = (
         duo.groupby("brinnummer_duo")["gemeentenummer_duo"]
@@ -289,10 +294,10 @@ def label_tech_studies(input_df: pd.DataFrame) -> pd.DataFrame:
     :param input_df: pd.Dataframe
     :return: pd.DataFrame with additional tech_label column to filter on
     """
-    tech_label_dict = open_tech_label_yaml()['tech']
-    input_df['tech_label'] = input_df['opleidingsnaam_duo'].map(tech_label_dict)
+    tech_label_dict = open_tech_label_yaml()["tech"]
+    input_df["tech_label"] = input_df["opleidingsnaam_duo"].map(tech_label_dict)
     # tricky CHECK with TEKKIEWORDEN!
-    input_df['tech_label'] = input_df['tech_label'].fillna("no_tech")
+    input_df["tech_label"] = input_df["tech_label"].fillna("no_tech")
 
     return input_df
 
@@ -309,13 +314,17 @@ def filter_tech_studies(input_df: pd.DataFrame) -> pd.DataFrame:
     return tech_filtered_df
 
 
-if __name__ == "__main__":
-    sdb = prepare_sdb_opleidingen_file(path=config.PATH_TO_RAW_DATA,
-                                       file=config.SDB_FILE,
-                                       data_quality_report=None)
+def main():
+    sdb = prepare_sdb_opleidingen_file(
+        path=config.PATH_TO_RAW_DATA, file=config.SDB_FILE, data_quality_report=None
+    )
     duo = concat_unstack_duo_ho_files(years=[2015, 2016, 2017, 2018, 2019])
     df = merge_duo_sdb_files(duo_file=duo, sdb_file=sdb)
     df = tag_tech_studies(input_df=df, tech_keywords=config.tech_keywords)
     write_df_csv(input_df=df, filename="opleidingen_total_munged.csv")
     tech_filtered_df = filter_tech_studies(input_df=df)
     write_df_csv(input_df=tech_filtered_df, filename="opleidingen_tech_filtered.csv")
+
+
+if __name__ == "__main__":
+    main()
