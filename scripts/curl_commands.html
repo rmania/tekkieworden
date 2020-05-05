@@ -1,9 +1,27 @@
+# load environment variables in .env file
+envup() {
+  local file=$([ -z "$1" ] && echo ".env" || echo ".env.$1")
+
+  if [ -f $file ]; then
+    set -a
+    source $file
+    set +a
+  else
+    echo "No $file file found" 1>&2
+    return 1
+  fi
+}
+
 # Get token
-curl  -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=client_credentials&client_id=XXX&client_secret=XXX"
--X POST https://token.studiekeuzedatabase.nl/token
+curl  -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=client_credentials&client_id=$CLIENT_ID&client_secret=$CLIENT_SECRET" -X POST https://token.studiekeuzedatabase.nl/token
 
 # get data with BEARER Access token XXX
-curl  -H "Authorization: Bearer XXX " https://api.studiekeuzedatabase.nl/Studiekeuzedatabase.svc/
+curl  -H "Authorization: Bearer XXX" https://api.studiekeuzedatabase.nl/Studiekeuzedatabase.svc/Instellingen?$orderby=Instellingsnaam
+
+# possibles queries
+# https://api.studiekeuzedatabase.nl/Studiekeuzedatabase.svc/Instellingen?$orderby=Instellingsnaam
+# https://api.studiekeuzedatabase.nl/Studiekeuzedatabase.svc/Instellingen(115L)
+# https://api.studiekeuzedatabase.nl/Studiekeuzedatabase.svc/Instellingen(115L)?$expand=Vestigingen
 
 # use refresh token for new access token
 curl  -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=refresh_token&refresh_token=XXX&client_id=XXX"

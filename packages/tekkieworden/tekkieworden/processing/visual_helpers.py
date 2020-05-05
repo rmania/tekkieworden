@@ -1,3 +1,5 @@
+import seaborn as sns
+import matplotlib.pyplot as plt
 import math
 
 spark_chars = u"▁▂▃▄▅▆▇█"
@@ -38,3 +40,31 @@ def create_spark_charts(series, minimum=None, maximum=None):
         return spark_chars[int(round(clamp(n) - minimum) * coefficient)]
 
     return u"".join(spark_for(n) if _isan(n) else " " for n in series)
+
+
+def plot_facet_grid(input_df, hue_var, groupby_var):
+    """
+    create seaborn FacetGrid lineplot
+    :param input_df: melted pd.DataFrame
+    :param hue_var: HUE variable
+    :param groupby_var: value to groupby on
+    :return: Matplotlib ax
+    """
+    id_vars = ['instellingsnaam_duo', 'opleidingsnaam_duo', groupby_var, hue_var]
+
+    no = len(input_df[hue_var].unique())
+    palette = dict(zip(input_df[hue_var].unique(),
+                       sns.color_palette("rocket_r", no)))
+
+    grid = sns.FacetGrid(input_df, col=groupby_var, palette=palette, col_wrap=4,
+                         hue=hue_var, sharex=False, sharey=False, height=5, aspect=1.5)
+
+    grid.map(plt.axhline, y=0, ls=":", c=".5")
+
+    grid.map(plt.plot, "variable", "inschrijvingen", marker='o')
+    grid.add_legend()
+
+    for ax in grid.axes.flat:
+        _ = plt.setp(ax.get_xticklabels(), visible=True)  ## set proporty of an artist object
+
+    return grid
