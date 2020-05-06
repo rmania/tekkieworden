@@ -59,11 +59,18 @@ class Studiekeuzedb_api():
         else:
             return token
 
+    def getSession(self, token):
+        try:
+            session = self.service.get_session(token=token)
+        except Exception as e:
+            print(e)
+            return None
+        else:
+            return session
+
     class Decorators():
         @staticmethod
         def refreshToken(decorated):
-            # the function that is used to check
-            # the JWT and refresh if necessary
             def wrapper(api, *args, **kwargs):
                 if time.time() > api.access_token_expiration:
                     api.getAccessToken()
