@@ -1,9 +1,5 @@
 import pathlib
-import pandas as pd
 import tekkieworden
-
-pd.options.display.max_rows = 10
-pd.options.display.max_columns = 10
 
 # paths
 PACKAGE_ROOT = pathlib.Path(tekkieworden.__file__).resolve().parent
