@@ -45,5 +45,7 @@ def open_tech_label_yaml():
 
 if __name__ == "__main__":
     download_student_inscriptions(url=config.MBO_CSV_URL, file=config.DUO_MBO_FILE)
-    download_student_inscriptions(url=config.HBO_CSV_URL, file=config.DUO_HBO_FILE)
-    download_student_inscriptions(url=config.WO_CSV_URL, file=config.DUO_WO_FILE)
+    download_student_inscriptions(url=config.HBO_CSV_I_URL, file=config.DUO_HBO_I_FILE)  # ingeschrevenen
+    download_student_inscriptions(url=config.HBO_CSV_D_URL, file=config.DUO_HBO_D_FILE)  # gediplomeerden
+    download_student_inscriptions(url=config.WO_CSV_I_URL, file=config.DUO_WO_I_FILE)  # ingeschrevenen
+    download_student_inscriptions(url=config.WO_CSV_D_URL, file=config.DUO_WO_D_FILE)  # gediplomeerden
