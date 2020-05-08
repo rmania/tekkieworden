@@ -9,8 +9,8 @@ from typing import List
 
 from tekkieworden.config import config
 from tekkieworden.processing.readers import open_tech_label_yaml
-from tekkieworden.processing.writers import write_df_csv
-from tekkieworden.processing.utilities import pandas_join_key_dual
+from tekkieworden.processing.writers import write_df_csv, write_excel_to_yaml
+from tekkieworden.processing.utilities import pandas_join_key_dual, pandas_join_on_index
 
 
 _logger = logging.getLogger(__name__)
@@ -121,30 +121,77 @@ def prepare_duo_ho_files(path, file: str, ho_type: str) -> pd.DataFrame:
     return df
 
 
-def concat_unstack_duo_ho_files(years=List[int]) -> pd.DataFrame:
-    """
-    Pivotting the DUO file and totalling the student numbers on all years
-    :param years: list of years to be summed e.g. [2017, 2018, 2019]
-    :return: pivoted DUO file with summed inscriptions
-    """
+def add_total_columns(input_df):
+    year_figure_regex = "\d"  # 2015, ..
+    year_figure_cols = input_df.filter(
+        regex=year_figure_regex, axis=1
+    ).columns.values.tolist()
+    numeric_chars = np.unique([re.sub("[^0-9]", "", x) for x in year_figure_cols])
 
-    hbo = prepare_duo_ho_files(
-        path=config.PATH_TO_RAW_DATA, file=config.DUO_HBO_CSV, ho_type="hbo"
-    )
-    wo = prepare_duo_ho_files(
-        path=config.PATH_TO_RAW_DATA, file=config.DUO_WO_CSV, ho_type="wo"
-    )
-    duo = pd.concat([wo, hbo], axis=0)
+    for y in numeric_chars:
+        filter_cols = input_df.filter(regex=y, axis=1).columns
+        input_df[f"{y}_tot"] = input_df[filter_cols].sum(axis=1)
+
+    return input_df
+
+
+def rename_digit_cols(input_df, underscore):
+    year_figure_regex = "\d"  # 2015, ...
+    year_figure_cols = input_df.filter(
+        regex=year_figure_regex, axis=1
+    ).columns.values.tolist()
+    rename_dict = {x: x + underscore for x in year_figure_cols}
+    input_df = input_df.rename(columns=rename_dict)
+
+    return input_df
+
+
+def unstack_duo_ho_files(ho_type) -> pd.DataFrame:
+    text_intro = "There is a discrepancy between DUO files <gediplomeerden> file and DUO <ingeschrevenen>. Duo_d file are not as up-to-date and contain different opleidingen. \
+We make the <ingeschrevenen> file and the opleidingscodes it contains leading."
+    text_warning = "These are the opleidingen that are NOT joined. Carefully watch if there are is no TECH involved!"
+
+    if ho_type == "hbo":
+        # ingeschrevenen
+        file_i = prepare_duo_ho_files(
+            path=config.PATH_TO_RAW_DATA, file=config.DUO_HBO_I_CSV, ho_type="hbo"
+        )
+        # gediplomeerden
+        file_d = prepare_duo_ho_files(
+            path=config.PATH_TO_RAW_DATA, file=config.DUO_HBO_D_CSV, ho_type="hbo"
+        )
+    elif ho_type == "wo":
+        # ingeschrevenen
+        file_i = prepare_duo_ho_files(
+            path=config.PATH_TO_RAW_DATA, file=config.DUO_WO_I_CSV, ho_type="wo"
+        )
+        # gediplomeerden
+        file_d = prepare_duo_ho_files(
+            path=config.PATH_TO_RAW_DATA, file=config.DUO_WO_D_CSV, ho_type="wo"
+        )
+
+    unique_opleidingen_i = file_i.opleidingscode_duo.unique().tolist()
     logging.info(
-        f"Concatting {config.DUO_HBO_CSV, config.DUO_WO_CSV}\n. Duo file shape: {duo.shape}"
+        f"number of unique opleidingen from {config.DUO_HBO_I_CSV}: {len(unique_opleidingen_i)}"
     )
+
+    drop_opleidingen_d = (
+        file_d[~file_d.opleidingscode_duo.isin(unique_opleidingen_i)]
+        .opleidingsnaam_duo.unique()
+        .tolist()
+    )
+    logging.info(f"{text_intro} {text_warning} {drop_opleidingen_d}")
+
+    file_d = file_d[file_d.opleidingscode_duo.isin(unique_opleidingen_i)]
 
     gemeentes = (
-        duo.groupby("brinnummer_duo")["gemeentenummer_duo"]
-        .unique()
-        .apply(list)
-        .reset_index()
+        file_i.groupby("brinnummer_duo")["gemeentenummer_duo"].unique().apply(list)
     )
+
+    year_figure_regex = "\d"  # 2015, ...
+    year_figure_cols = file_i.filter(
+        regex=year_figure_regex, axis=1
+    ).columns.values.tolist()
 
     groupby_cols = [
         "brinnummer_duo",
@@ -155,37 +202,52 @@ def concat_unstack_duo_ho_files(years=List[int]) -> pd.DataFrame:
         "opleidingsnaam_duo",
         "ho_type",
         "soortopleiding_duo",
-        #'opleidingsvorm_duo', # voltijd vs deeltijd
         "geslacht",
     ]
 
-    duo_ = (
-        duo.groupby(groupby_cols)[str(years[-1])]
-        .sum()
-        .unstack("geslacht")
-        .drop("man", axis=1)
-        .drop("vrouw", axis=1)
-    ).reset_index(drop=False)
+    file_i_agg = (
+        file_i.groupby(groupby_cols)[year_figure_cols].sum().unstack("geslacht")
+    )
+    file_i_agg.columns = ["_".join(col).strip() for col in file_i_agg.columns.values]
+    file_i_agg = file_i_agg.reset_index(drop=False).set_index(
+        ["brinnummer_duo", "opleidingscode_duo"]
+    )
 
-    logging.info("Merge back the concatted gemeentes")
-    duo_ = pd.merge(left=duo_, right=gemeentes, on=["brinnummer_duo"], how="left")
+    file_i_agg = add_total_columns(input_df=file_i_agg)
+    file_i_agg = rename_digit_cols(input_df=file_i_agg, underscore="_i")
 
-    logging.info(f"Duo file shape: {duo_.shape}")
-    logging.info(f"Extract \n: {duo_.head(5)}")
+    # File gedlipomeerden
+    year_figure_cols = file_d.filter(
+        regex=year_figure_regex, axis=1
+    ).columns.values.tolist()
 
-    logging.info("summing MAN, VROUW into TOTAL")
+    groupby_cols = [
+        "brinnummer_duo",
+        "opleidingscode_duo",
+        "geslacht",
+    ]
 
-    concatted_frame = []
-    for y in years:
-        duo_y = (
-            duo.groupby(groupby_cols)[str(y)].sum().unstack("geslacht")
-        ).reset_index(drop=False)
-        duo_y[f"tot_{y}_duo"] = duo_y["man"].add(duo_y["vrouw"])
-        concatted_frame.append(duo_y[f"tot_{y}_duo"])
+    file_d_agg = (
+        file_d.groupby(groupby_cols)[year_figure_cols].sum().unstack("geslacht")
+    )
+    file_d_agg.columns = ["_".join(col).strip() for col in file_d_agg.columns.values]
 
-    concatted_df = pd.concat([duo_, pd.concat(concatted_frame, axis=1)], axis=1)
+    file_d_agg = add_total_columns(input_df=file_d_agg)
+    file_d_agg = rename_digit_cols(input_df=file_d_agg, underscore="_d")
 
-    return concatted_df
+    file_i_agg = pandas_join_on_index(
+        left_df=file_i_agg, right_df=file_d_agg, how="left"
+    ).reset_index()
+
+    file_i_agg = pandas_join_on_index(
+        left_df=file_i_agg.set_index("brinnummer_duo"), right_df=gemeentes, how="left"
+    ).reset_index()
+
+    return file_i_agg
+
+
+def concat_hbo_wo(hbo_input_df, wo_input_df):
+    return pd.concat([hbo_input_df, wo_input_df], axis=0)
 
 
 def merge_duo_sdb_files(duo_file, sdb_file) -> pd.DataFrame:
@@ -208,7 +270,7 @@ def merge_duo_sdb_files(duo_file, sdb_file) -> pd.DataFrame:
         "naamopleidingengels_sdb",
         # 'opleidingsvorm_sdb'
     ]
-    logging.info(f"Group the {sdb_file} on : {sdb_groupby_cols}")
+    logging.info("Group the sdb_file on : {sdb_groupby_cols}")
     sdb_agg = (
         sdb_file.groupby(sdb_groupby_cols)
         .agg({"eerstejaarsaantal_sdb": "sum", "studentenaantal_sdb": "sum"})
@@ -224,7 +286,7 @@ def merge_duo_sdb_files(duo_file, sdb_file) -> pd.DataFrame:
         "studentenaantal_sdb",
     ]
 
-    logging.info(f"Merging {duo_file} and aggregrated: {sdb_file} on : {sdb_join_cols}")
+    logging.info(f"Merging duo_file and aggregrated: sdb_file on : {sdb_join_cols}")
     logging.info(f"Adding following columns: {sdb_add_cols}")
     df = pandas_join_key_dual(
         left_df=duo_file,
@@ -236,23 +298,21 @@ def merge_duo_sdb_files(duo_file, sdb_file) -> pd.DataFrame:
     df = df.drop(sdb_join_cols, axis=1)
 
     fill_cols = ["studentenaantal_sdb", "eerstejaarsaantal_sdb"]
-    logging.info(
-        f"Filling : {fill_cols} with data from : {duo_file} when data is missing"
-    )
+    logging.info(f"Filling : {fill_cols} with data from duo_file when data is missing")
     df.loc[df.studentenaantal_sdb.isnull(), fill_cols] = df.loc[
-        df.studentenaantal_sdb.isnull(), "tot_2018_duo"
+        df.studentenaantal_sdb.isnull(), "2018_tot_i"
     ]
-    df.loc[df.tot_2018_duo.isnull(), "tot_2018_duo"] = df.loc[
-        df.tot_2018_duo.isnull(), "eerstejaarsaantal_sdb"
+    df.loc[df["2018_tot_i"].isnull(), "2018_tot_i"] = df.loc[
+        df["2018_tot_i"].isnull(), "eerstejaarsaantal_sdb"
     ]
 
     logging.info(
-        f"put actieveopleiding_sdb to status active when succesfully merged with {duo_file}"
+        "put actieveopleiding_sdb to status active when succesfully merged with duo file"
     )
     df.loc[df.actieveopleiding_sdb.isnull(), "actieveopleiding_sdb"] = 1.0
 
     logging.info(
-        f"if English naamopleiding from {sdb_file} is missing, copy from : {duo_file}"
+        f"if English naamopleiding from sdb_file is missing, copy from duo_file"
     )
     df.loc[(df.naamopleidingengels_sdb.isnull()), "naamopleidingengels_sdb"] = df.loc[
         (df.naamopleidingengels_sdb.isnull()), "opleidingsnaam_duo"
@@ -323,28 +383,56 @@ def melt_frame(input_df, hue_var: str, groupby_var: str) -> pd.DataFrame:
     :return: melted pd.DataFrame
     """
 
-    tot_cols = ['tot_2015_duo', 'tot_2016_duo', 'tot_2017_duo', 'tot_2018_duo', 'tot_2019_duo']
-    id_vars = ['instellingsnaam_duo', 'opleidingsnaam_duo', groupby_var, hue_var]
+    tot_cols = [
+        "tot_2015_duo",
+        "tot_2016_duo",
+        "tot_2017_duo",
+        "tot_2018_duo",
+        "tot_2019_duo",
+    ]
+    id_vars = ["instellingsnaam_duo", "opleidingsnaam_duo", groupby_var, hue_var]
 
-    melt_frame = (pd.melt(frame=input_df,
-                          id_vars=id_vars,
-                          value_vars=tot_cols,
-                          value_name="inschrijvingen")
-                  .sort_values(by=['instellingsnaam_duo', 'opleidingsnaam_duo', groupby_var, hue_var, 'variable'])
-                  .groupby([groupby_var, hue_var, 'variable'])
-                  .agg({'inschrijvingen': 'sum'})
-                  .reset_index())
-    melt_frame.variable = melt_frame.variable.apply(lambda x: x.replace("tot_", "").replace("_duo", ""))
+    melt_frame = (
+        pd.melt(
+            frame=input_df,
+            id_vars=id_vars,
+            value_vars=tot_cols,
+            value_name="inschrijvingen",
+        )
+        .sort_values(
+            by=[
+                "instellingsnaam_duo",
+                "opleidingsnaam_duo",
+                groupby_var,
+                hue_var,
+                "variable",
+            ]
+        )
+        .groupby([groupby_var, hue_var, "variable"])
+        .agg({"inschrijvingen": "sum"})
+        .reset_index()
+    )
+    melt_frame.variable = melt_frame.variable.apply(
+        lambda x: x.replace("tot_", "").replace("_duo", "")
+    )
 
     return melt_frame
 
+
 def main():
-    sdb = prepare_sdb_opleidingen_file(
+    write_excel_to_yaml(
+        input_df=str(config.PATH_TO_RAW_DATA) + "/cluster_tech_labeling_5.xlsx",
+        filename="tech_label.yml",
+    )
+    sdb_file = prepare_sdb_opleidingen_file(
         path=config.PATH_TO_RAW_DATA, file=config.SDB_FILE, data_quality_report=None
     )
-    duo = concat_unstack_duo_ho_files(years=[2015, 2016, 2017, 2018, 2019])
-    df = merge_duo_sdb_files(duo_file=duo, sdb_file=sdb)
+    hbo = unstack_duo_ho_files(ho_type="hbo")
+    wo = unstack_duo_ho_files(ho_type="wo")
+    duo_file = concat_hbo_wo(hbo_input_df=hbo, wo_input_df=wo)
+    df = merge_duo_sdb_files(duo_file=duo_file, sdb_file=sdb_file)
     df = tag_tech_studies(input_df=df, tech_keywords=config.tech_keywords)
+    df = label_tech_studies(input_df=df)
     write_df_csv(input_df=df, filename="opleidingen_total_munged.csv")
     tech_filtered_df = filter_tech_studies(input_df=df)
     write_df_csv(input_df=tech_filtered_df, filename="opleidingen_tech_filtered.csv")

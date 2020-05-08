@@ -1,5 +1,5 @@
 tech:
-  AD-ICT: tech
+  AD-ICT: support
   Aansprakelijkheid en verzekering: no_tech
   Aarde en Economie: no_tech
   Aardwetenschappen: no_tech
@@ -12,7 +12,7 @@ tech:
   Actuariele Wetenschappen: no_tech
   Advanced Health Informatics Practice: no_tech
   Advanced Nursing Practice: no_tech
-  Advanced Technology: tech
+  Advanced Technology: developer
   Aerospace Engineering: no_tech
   Afrika Studies: no_tech
   Afrika Studies (research): no_tech
@@ -39,7 +39,7 @@ tech:
   Architecture, Building and Planning: no_tech
   Architecture, Urbanism and Building Sciences: no_tech
   Architectuur: no_tech
-  Artificial Intelligence: tech
+  Artificial Intelligence: developer
   Arts & Crafts: no_tech
   Arts - Klinisch Onderzoeker (research): no_tech
   Astronomy: no_tech
@@ -66,10 +66,10 @@ tech:
   Bewegingswetenschappen: no_tech
   Bio-Farmaceutische Wetenschappen: no_tech
   Bio-Pharmaceutical Sciences: no_tech
-  Bio-informatica: tech
+  Bio-informatica: developer
   Biobased Materials: no_tech
   Biobased Sciences: no_tech
-  Bioinformatics: tech
+  Bioinformatics: developer
   Bioinformatics and Systems Biology (joint degree): no_tech
   Biological Sciences: no_tech
   Biologie: no_tech
@@ -92,15 +92,15 @@ tech:
   Brain and Cognitive Sciences (research): no_tech
   Built Environment: no_tech
   Business Administration: no_tech
-  Business Analytics: tech
-  Business Analytics and Operations Research: tech
+  Business Analytics: data
+  Business Analytics and Operations Research: data
   Business Economics: no_tech
-  Business IT & Management: tech
+  Business IT & Management: support
   Business Information Management: no_tech
-  Business Information Systems: tech
-  Business Information Technology: tech
+  Business Information Systems: support
+  Business Information Technology: support
   Business Innovation: no_tech
-  Business Intelligence and Smart Services: tech
+  Business Intelligence and Smart Services: data
   Business Research (research): no_tech
   Business Studies: no_tech
   Business Studies Logistiek: no_tech
@@ -128,7 +128,7 @@ tech:
   Cognition, Language and Communication: no_tech
   Cognitive Neuropsychology (research): no_tech
   Cognitive Neuroscience (research): no_tech
-  Cognitive Science and Artificial Intelligence: tech
+  Cognitive Science and Artificial Intelligence: developer
   Cognitive and Clinical Neuroscience (research): no_tech
   Commercial Law: no_tech
   Commercieel Management: no_tech
@@ -144,14 +144,14 @@ tech:
   Communication and Multimedia Design: designer
   Communication, Health and Life Sciences: no_tech
   Community Development: no_tech
-  Complex Systems Engineering and Management: tech
-  Computational Science: tech
-  Computational Science (joint degree): tech
-  Computer Engineering: tech
-  Computer Science: tech
-  Computer Science (joint degree): tech
-  Computer Science and Engineering: tech
-  Computing Science: tech
+  Complex Systems Engineering and Management: data
+  Computational Science: developer
+  Computational Science (joint degree): developer
+  Computer Engineering: developer
+  Computer Science: developer
+  Computer Science (joint degree): developer
+  Computer Science and Engineering: developer
+  Computing Science: developer
   Conflict Resolution and Governance: no_tech
   Conservering en Restauratie van Cultureel Erfgoed: no_tech
   Constructeur Werktuigbouwkunde: no_tech
@@ -159,8 +159,8 @@ tech:
   Content & Media Strategy: growth
   Creative Business: growth
   Creative Media Professional: growth
-  Creative Media and Game Technologies: tech
-  Creative Technology: tech
+  Creative Media and Game Technologies: designer
+  Creative Technology: developer
   Criminaliteit en Rechtshandhaving: no_tech
   Criminologie: no_tech
   Crisis and Security Management: no_tech
@@ -176,16 +176,16 @@ tech:
   Culturele Antropologie en Sociologie der Niet-Westerse Samenlevingen: no_tech
   Culturele Geografie: no_tech
   Cultuurwetenschappen: no_tech
-  Cybersecurity: tech
+  Cybersecurity: developer
   DAS Creative Producing: no_tech
   Dans: no_tech
-  Data Science (joint degree): tech
-  Data Science and Entrepreneurship (joint degree): tech
-  Data Science and Knowledge Engineering: tech
-  Data Science and Society: tech
-  Data Science for Decision Making: tech
-  Data Science for Life Sciences: tech
-  Data-driven Design: tech
+  Data Science (joint degree): data
+  Data Science and Entrepreneurship (joint degree): data
+  Data Science and Knowledge Engineering: data
+  Data Science and Society: data
+  Data Science for Decision Making: data
+  Data Science for Life Sciences: data
+  Data-driven Design: data
   Design Driven Innovation: no_tech
   Design for Interaction: designer
   Development Studies: no_tech
@@ -195,8 +195,8 @@ tech:
   Dier- en Veehouderij: no_tech
   Diergeneeskunde: no_tech
   Diermanagement: no_tech
-  Digital Design: tech
-  Digital Driven Business: tech
+  Digital Design: data
+  Digital Driven Business: data
   Digital Society: no_tech
   Digitale Innovatie in Zorg en Welzijn: no_tech
   Docent Beeldende Kunst en Vormgeving: no_tech
@@ -244,14 +244,14 @@ tech:
   Elektrotechniek: no_tech
   Elektrotechniek/Embedded Systems Engineering: no_tech
   Elektrotechniek/Energietechniek: no_tech
-  Embedded Systems: tech
+  Embedded Systems: developer
   Energy and Climate Law: no_tech
   Energy and Environmental Sciences: no_tech
   Energy for Society: no_tech
   Engelse Taal en Cultuur: no_tech
   Engineering: no_tech
-  Engineering Systems: tech
-  Engineering and Policy Analysis: tech
+  Engineering Systems: support
+  Engineering and Policy Analysis: data
   English Language and Culture: no_tech
   Entrepreneurship (joint degree): no_tech
   Environment and Resource Management: no_tech
@@ -275,7 +275,7 @@ tech:
   European Public Health: no_tech
   European Studies: no_tech
   European Studies (research): no_tech
-  European Studies on Society, Science and Technology: tech
+  European Studies on Society, Science and Technology: data
   Europese Studies: no_tech
   Europese Studies (joint degree): no_tech
   Europese Talen en Culturen: no_tech
@@ -316,7 +316,7 @@ tech:
   Forest and Nature Conservation: no_tech
   Franse Taal en Cultuur: no_tech
   Future Planet Studies: no_tech
-  Game Technology: tech
+  Game Technology: developer
   Gemeentepredikant: no_tech
   Geneeskunde: no_tech
   Geneeskunde, klinisch onderzoeker: no_tech
@@ -349,7 +349,7 @@ tech:
   Governance of Sustainability: no_tech
   Griekse en Latijnse Taal en Cultuur: no_tech
   HBO - Rechten: no_tech
-  HBO-ICT: tech
+  HBO-ICT: support
   Health & Social Work: no_tech
   Health Care and Social Work: no_tech
   Health Economics, Policy and Law: no_tech
@@ -372,36 +372,36 @@ tech:
   'Human Movement Sciences: Sport, Exercise and Health (research)': no_tech
   Human Resource Management: no_tech
   Human Resource Studies: no_tech
-  Human-Machine Communication: tech
-  Human-technology Interaction: tech
+  Human-Machine Communication: developer
+  Human-technology Interaction: developer
   Humanistiek: no_tech
   Humanities (research): no_tech
   Hydrology: no_tech
-  ICT: tech
-  ICT Internet of Things: tech
-  ICT Service Management: tech
-  ICT in Business and the Public Sector: tech
-  ICT-Beheer: tech
-  IT Service Management: tech
+  ICT: support
+  ICT Internet of Things: support
+  ICT Service Management: support
+  ICT in Business and the Public Sector: support
+  ICT-Beheer: support
+  IT Service Management: support
   IT-recht: no_tech
   Individual Differences and Assessment (research): no_tech
   Industrial Design: designer
   Industrial Design Engineering: designer
   Industrial Ecology (joint degree): no_tech
-  Industrial Engineering and Management: tech
+  Industrial Engineering and Management: data
   Industrial and Applied Mathematics: no_tech
   Industrieel Ontwerpen: designer
   Industrieel Product Ontwerpen: designer
   Industriele Automatisering en Robotica: no_tech
   Infection and Immunity (research): no_tech
-  Informatica: tech
-  Informatiekunde: tech
+  Informatica: developer
+  Informatiekunde: developer
   Informatierecht: no_tech
-  Information Management: tech
-  Information Science: tech
-  Information Sciences: tech
-  Information Studies: tech
-  Information and Network Economics: tech
+  Information Management: data
+  Information Science: developer
+  Information Sciences: developer
+  Information Studies: developer
+  Information and Network Economics: support
   Innovatie in Zorg en Welzijn: no_tech
   Innovation Management: no_tech
   Innovation Sciences: no_tech
@@ -410,7 +410,7 @@ tech:
   Integraal Bouwmanagement: no_tech
   Integrale Veiligheidskunde: no_tech
   Integrated Product Design: designer
-  Interaction Technology: tech
+  Interaction Technology: developer
   Interdisciplinary Arts: no_tech
   Interieurarchitectuur: no_tech
   Interieurvormgever: no_tech
@@ -447,7 +447,7 @@ tech:
   Internationale Betrekkingen en Internationale Organisatie: no_tech
   Internationale Ontwikkelingsstudies: no_tech
   Internationale betrekkingen: no_tech
-  Internet Science and Technology: tech
+  Internet Science and Technology: developer
   Islam en Arabisch: no_tech
   Italiaanse Taal en Cultuur: no_tech
   Japanstudies: no_tech
@@ -467,7 +467,7 @@ tech:
   Kunsteducatie (joint degree): no_tech
   Kunsten, Cultuur en Media: no_tech
   Kunstgeschiedenis: no_tech
-  Kunstmatige Intelligentie: tech
+  Kunstmatige Intelligentie: developer
   Kust en Zee Management: no_tech
   Land- en Watermanagement: no_tech
   Landscape Architecture and Planning: no_tech
@@ -539,7 +539,7 @@ tech:
   Life Science and Technology: no_tech
   Life Science and Technology (joint degree): no_tech
   Life Sciences: no_tech
-  Lifestyle Informatics: tech
+  Lifestyle Informatics: developer
   Linguistics and Communication Sciences (research): no_tech
   Literatuur en Samenleving: no_tech
   Literatuurwetenschap: no_tech
@@ -556,7 +556,7 @@ tech:
   Management Publieke Sector: no_tech
   Management in de Zorg: no_tech
   Management of Innovation: no_tech
-  Management of Technology: tech
+  Management of Technology: support
   Management van de Leefomgeving: no_tech
   Management, Economics and Consumer Studies: no_tech
   Management, Policy Analysis and Entrepreneurship in the Health and Life Sciences: no_tech
@@ -567,7 +567,7 @@ tech:
   Maritiem Officier: no_tech
   Maritieme Techniek: no_tech
   Marketing: growth
-  Marketing Analytics: tech
+  Marketing Analytics: data
   Marketing Management: growth
   Master Circulaire Economie: no_tech
   Master Deaf Studies & Communication Needs: no_tech
@@ -586,13 +586,13 @@ tech:
   Mathematics: no_tech
   Mathematische Wetenschappen: no_tech
   Mechanical Engineering: no_tech
-  Mechatronica: tech
+  Mechatronica: designer
   Media en Cultuur: no_tech
   Media en informatie: no_tech
   Media, Kunst, Design en Architectuur: no_tech
   Mediastudies: no_tech
   Mediastudies (research): no_tech
-  Mediatechnology: tech
+  Mediatechnology: support
   Medical Biology: no_tech
   Medical Engineering: no_tech
   Medical Informatics: no_tech
@@ -600,7 +600,7 @@ tech:
   Medisch Beeldvormende en Radiotherapeutische Technieken: no_tech
   Medische Antropologie en Sociologie: no_tech
   Medische Hulpverlening: no_tech
-  Medische Informatiekunde: tech
+  Medische Informatiekunde: developer
   Medische Natuurwetenschappen: no_tech
   Medische Psychologie: no_tech
   Melkveehouderij: no_tech
@@ -647,7 +647,7 @@ tech:
   Neuroscience (research): no_tech
   Neuroscience and Cognition: no_tech
   Neurosciences (research): no_tech
-  Next Level Engineering: tech
+  Next Level Engineering: data
   Nieuwgriekse Taal en Cultuur: no_tech
   Noord-Amerika Studies: no_tech
   Notarieel Recht: no_tech
@@ -725,7 +725,7 @@ tech:
   Oudheidstudies: no_tech
   Oudheidstudies (research): no_tech
   Oudheidwetenschappen: no_tech
-  Parallel and Distributed Computer Systems: tech
+  Parallel and Distributed Computer Systems: developer
   Pastoraal Werk: no_tech
   Pedagogiek: no_tech
   Pedagogisch Educatief Professional: no_tech
@@ -798,12 +798,12 @@ tech:
   Science, Business & Innovation: no_tech
   Science, Business and Innovation: no_tech
   Security Studies: no_tech
-  Security and Network Engineering: tech
-  Serious Gaming: tech
+  Security and Network Engineering: developer
+  Serious Gaming: developer
   Service, Welzijn & Zorg: no_tech
   Slavische Talen en Culturen: no_tech
-  Smart Industry: tech
-  Smart Systems Engineering: tech
+  Smart Industry: data
+  Smart Systems Engineering: developer
   Sociaal Financiele Dienstverlening: no_tech
   Sociaal Recht en Sociale Politiek: no_tech
   Sociaal Werk: no_tech
@@ -824,8 +824,8 @@ tech:
   Sociologie: no_tech
   Sociology: no_tech
   Sociology and Social Research (research): no_tech
-  Software Development: tech
-  Software Engineering: tech
+  Software Development: developer
+  Software Engineering: developer
   Soil, Water, Atmosphere: no_tech
   Sonologie: no_tech
   Spaanse Taal en Cultuur: no_tech
@@ -857,20 +857,20 @@ tech:
   Taalwetenschappen (research): no_tech
   Talentontwikkeling en Diversiteit: no_tech
   Tandheelkunde: no_tech
-  Technical Computer Science: tech
+  Technical Computer Science: developer
   Technical Medicine: no_tech
   Technical Medicine (joint degree): no_tech
   Technische Aardwetenschappen: no_tech
   Technische Bedrijfskunde: no_tech
   Technische Bestuurskunde: no_tech
-  Technische Informatica: tech
+  Technische Informatica: developer
   Technische Innovatiewetenschappen: no_tech
   Technische Natuurkunde: no_tech
   Technische Planologie: no_tech
   Technische Productie: no_tech
   Technische Wiskunde: no_tech
   Technology and Liberal Arts & Sciences: no_tech
-  Technology and Operations Management: tech
+  Technology and Operations Management: data
   Theater: no_tech
   Theaterwetenschap: no_tech
   Theatre Practices: no_tech

@@ -50,21 +50,31 @@ def plot_facet_grid(input_df, hue_var, groupby_var):
     :param groupby_var: value to groupby on
     :return: Matplotlib ax
     """
-    id_vars = ['instellingsnaam_duo', 'opleidingsnaam_duo', groupby_var, hue_var]
+    id_vars = ["instellingsnaam_duo", "opleidingsnaam_duo", groupby_var, hue_var]
 
     no = len(input_df[hue_var].unique())
-    palette = dict(zip(input_df[hue_var].unique(),
-                       sns.color_palette("rocket_r", no)))
+    palette = dict(zip(input_df[hue_var].unique(), sns.color_palette("rocket_r", no)))
 
-    grid = sns.FacetGrid(input_df, col=groupby_var, palette=palette, col_wrap=4,
-                         hue=hue_var, sharex=False, sharey=False, height=5, aspect=1.5)
+    grid = sns.FacetGrid(
+        input_df,
+        col=groupby_var,
+        palette=palette,
+        col_wrap=4,
+        hue=hue_var,
+        sharex=False,
+        sharey=False,
+        height=5,
+        aspect=1.5,
+    )
 
     grid.map(plt.axhline, y=0, ls=":", c=".5")
 
-    grid.map(plt.plot, "variable", "inschrijvingen", marker='o')
+    grid.map(plt.plot, "variable", "inschrijvingen", marker="o")
     grid.add_legend()
 
     for ax in grid.axes.flat:
-        _ = plt.setp(ax.get_xticklabels(), visible=True)  ## set proporty of an artist object
+        _ = plt.setp(
+            ax.get_xticklabels(), visible=True
+        )  ## set proporty of an artist object
 
     return grid

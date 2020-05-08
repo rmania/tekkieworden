@@ -2,7 +2,7 @@ import logging
 import pandas as pd
 
 
-def pandas_join_key_single(left_df, right_df, key):
+def pandas_join_key_single(left_df, right_df, key, how):
 
     """
     perform left join with single key (identical key)
@@ -13,10 +13,10 @@ def pandas_join_key_single(left_df, right_df, key):
 
     logging.info(f"joining on key: {key}")
 
-    joined_df = left_df.merge(right_df, how="left", on=key, indicator=True)
+    joined_df = left_df.merge(right_df, how=how, on=key, indicator=True)
 
     logging.info(f"Join result\n{joined_df._merge.value_counts()}")
-    joined_df = joined_df.drop("_merge", axis=1)
+    # joined_df = joined_df.drop("_merge", axis=1)
 
     logging.info(f"joined df: {joined_df.shape}")
 
