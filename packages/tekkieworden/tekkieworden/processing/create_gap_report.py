@@ -19,11 +19,11 @@ def read_tech_file(path, file) -> pd.DataFrame:
 
 def add_spark_charts(input_df):
     tot_cols = [
-        "tot_2015_duo",
-        "tot_2016_duo",
-        "tot_2017_duo",
-        "tot_2018_duo",
-        "tot_2019_duo",
+        "2015_tot_i",
+        "2016_tot_i",
+        "2017_tot_i",
+        "2018_tot_i",
+        "2019_tot_i",
     ]
     df_agg = (
         input_df.groupby(["instellingsnaam_duo", "opleidingsnaam_duo"])[tot_cols]

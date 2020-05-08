@@ -31,11 +31,12 @@ def download_student_inscriptions(url, file: str):
             writer.writerow(line.decode("ISO-8859-1").split(","))
 
 
-def open_tech_label_yaml():
+def open_tech_label_yaml(yaml_file):
     """
     reads the tech_label.yml in config dir
+    :param yaml_file: name of the yaml file to open
     """
-    with open(str(config.PATH_TO_CONFIG) + "/tech_label.yml", "r") as f:
+    with open(str(config.PATH_TO_CONFIG) + "/" + yaml_file, "r") as f:
         try:
             tech_label_dict = yaml.safe_load(f)
         except yaml.YAMLError as exc:

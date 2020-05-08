@@ -354,7 +354,7 @@ def label_tech_studies(input_df: pd.DataFrame) -> pd.DataFrame:
     :param input_df: pd.Dataframe
     :return: pd.DataFrame with additional tech_label column to filter on
     """
-    tech_label_dict = open_tech_label_yaml()["tech"]
+    tech_label_dict = open_tech_label_yaml(yaml_file='ho_tech_labels.yml')["tech"]
     input_df["tech_label"] = input_df["opleidingsnaam_duo"].map(tech_label_dict)
     # tricky CHECK with TEKKIEWORDEN!
     input_df["tech_label"] = input_df["tech_label"].fillna("no_tech")
@@ -422,7 +422,7 @@ def melt_frame(input_df, hue_var: str, groupby_var: str) -> pd.DataFrame:
 def main():
     write_excel_to_yaml(
         input_df=str(config.PATH_TO_RAW_DATA) + "/cluster_tech_labeling_5.xlsx",
-        filename="tech_label.yml",
+        filename="ho_tech_labels.yml",
     )
     sdb_file = prepare_sdb_opleidingen_file(
         path=config.PATH_TO_RAW_DATA, file=config.SDB_FILE, data_quality_report=None
