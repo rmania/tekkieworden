@@ -36,6 +36,7 @@ ax1 = plt.subplot2grid(gridsize, (0, 0), colspan=1, rowspan=2)
 ax2 = plt.subplot2grid(gridsize, (0, 1), colspan=1, rowspan=2)
 ax3 = plt.subplot2grid(gridsize, (2, 0), colspan=2)
 line_specs = {'kind': 'line', 'marker': 'o', 'color': 'indianred', 'alpha': .6}
+hline_specs= {'c': 'darkgray', 'linewidth':2, 'zorder': 0, 'alpha': .8, 'linestyle' : "--"}
 
 if analysis == "Ingeschrevenen":
 
@@ -61,9 +62,11 @@ if analysis == "Ingeschrevenen":
         plotset.plot(ax=ax1, label=name, **line_specs)
     ax1.legend(frameon=False, loc='upper center', ncol=2)
 
-    top15 = df.groupby([dimvar])[agg_i_cols].sum().sum(axis=1).sort_values(ascending=False)[:15]
-    top15 = top15.to_frame().rename(columns={0: 'ingeschrevenen'})
+    top = df.groupby([dimvar])['2019_tot_i'].sum().sort_values(ascending=False)
+    mean_ = top.mean()
+    top15 = top[:15].to_frame().rename(columns={'2019_tot_i': 'ingeschrevenen'})
     top15.plot(kind='bar', ax=ax3, color='indianred', alpha=.4)
+    ax3.axhline(y=mean_, **hline_specs)
     # add_value_labels(ax=ax3, spacing=-30)
     ax3.set(ylim=(0, (1.2 * top15.ingeschrevenen.max())))
     ax3.grid(axis="y", linestyle="--")
@@ -91,15 +94,17 @@ elif analysis == "Gediplomeerden":
     agg_df = df.groupby([dimvar])[agg_d_cols].sum().reset_index()
     agg_df = agg_df.rename(columns=rename_dict)
     agg_melt = pd.melt(frame=agg_df, id_vars=dimvar,
-                       value_vars=agg_cols, value_name='Gediplomeerden')
+                       value_vars=agg_cols, value_name='gediplomeerden')
     for name in filter_vars:
         plotset = agg_df[agg_df[dimvar] == name][agg_cols].reset_index(drop=True).T.rename(columns={0: name})
         plotset.plot(ax=ax1, label=name, **line_specs)
     ax1.legend(frameon=False, loc='upper center', ncol=2)
 
-    top15 = df.groupby([dimvar])[agg_d_cols].sum().sum(axis=1).sort_values(ascending=False)[:15]
-    top15 = top15.to_frame().rename(columns={0: 'gediplomeerden'})
+    top = df.groupby([dimvar])['2018_tot_d'].sum().sort_values(ascending=False)
+    mean_ = top.mean()
+    top15 = top[:15].to_frame().rename(columns={'2018_tot_d': 'gediplomeerden'})
     top15.plot(kind='bar', ax=ax3, color='indianred', alpha=.4)
+    ax3.axhline(y=mean_, **hline_specs)
     # add_value_labels(ax=ax3, spacing=-30)
     ax3.set(ylim=(0, (1.2 * top15.gediplomeerden.max())))
     ax3.grid(axis="y", linestyle="--")
