@@ -78,3 +78,33 @@ def plot_facet_grid(input_df, hue_var, groupby_var):
         )  ## set proporty of an artist object
 
     return grid
+
+
+def remove_borders(ax, left=False, bottom=False, right=True, top=True):
+    """
+    Remove chart junk from matplotlib plots.
+    Args
+    ----------
+    axes : fi. plt.subplots()
+    left : bool (default: `False`)
+        Hide left axis spine if True.
+    bottom : bool (default: `False`)
+        Hide bottom axis spine if True.
+    right : bool (default: `True`)
+        Hide right axis spine if True.
+    top : bool (default: `True`)
+        Hide top axis spine if True.
+    """
+
+    ax.spines["top"].set_visible(not top)
+    ax.spines["right"].set_visible(not right)
+    ax.spines["bottom"].set_visible(not bottom)
+    ax.spines["left"].set_visible(not left)
+    if bottom:
+        ax.tick_params(bottom=False, labelbottom=False)
+    if top:
+        ax.tick_params(top=False)
+    if left:
+        ax.tick_params(left=False, labelleft=False)
+    if right:
+        ax.tick_params(right=False)
