@@ -92,6 +92,7 @@ if analysis == "Ingeschrevenen":
         ax.get_yaxis().set_major_formatter(StrMethodFormatter('{x:,.0f}'))
     for ax in [ax1, ax2]:
         _ = plt.setp(ax.get_xticklabels(), rotation='horizontal')
+
     st.pyplot()
 
 elif analysis == "Gediplomeerden":
@@ -144,6 +145,10 @@ elif analysis == "Gediplomeerden":
 if st.sidebar.checkbox("Show Data"):
     st.markdown("### Raw Data")
     st.write(agg_df)
+
+if st.sidebar.checkbox("summary"):
+    st.markdown("### Summary")
+    st.text('summary')
 
 st.info("""\
         [Tekkieworden Github repo](https://github.com/rmania/tekkieworden) 
