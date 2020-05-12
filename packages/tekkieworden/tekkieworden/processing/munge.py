@@ -419,6 +419,23 @@ def melt_frame(input_df, hue_var: str, groupby_var: str) -> pd.DataFrame:
     return melt_frame
 
 
+def prepare_mbo_file(groupby_col):
+    mbo = pd.read_csv(str(config.PATH_TO_RAW_DATA) + "/mbo_inscriptions_2019.csv", sep=";")
+    mbo_tech_dict = open_tech_label_yaml('mbo_tech_labels.yml')['tech']
+    mbo.columns = mbo.columns.str.replace(" ", "_").str.replace("'", "").str.lower()
+    mbo['tech_label'] = mbo.kwalificatie_naam.map(mbo_tech_dict)
+    rename_dict = {'totaal2015': '2015',
+                   'totaal2016': '2016',
+                   'totaal2017': '2017',
+                   'totaal2018': '2018',
+                   'totaal2019': '2019'}
+    mbo = mbo.rename(columns=rename_dict)
+    agg_cols = ['2015', '2016', '2017', '2018', '2019']
+    mbo_opl_agg = mbo[mbo.tech_label != 'no_tech'].groupby(groupby_col)[agg_cols].sum()
+
+    return mbo_opl_agg
+
+
 def main():
     write_excel_to_yaml(
         input_df=str(config.PATH_TO_RAW_DATA) + "/cluster_tech_labeling_5.xlsx",

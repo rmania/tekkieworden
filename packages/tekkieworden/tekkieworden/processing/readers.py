@@ -37,24 +37,21 @@ def open_tech_label_yaml(yaml_file):
     :param yaml_file: name of the yaml file to open
     """
     with open(str(config.PATH_TO_CONFIG) + "/" + yaml_file, "r") as f:
-        try:
-            tech_label_dict = yaml.safe_load(f)
-        except yaml.YAMLError as exc:
-            print(exc)
+        tech_label_dict = yaml.safe_load(f)
     return tech_label_dict
 
 
 if __name__ == "__main__":
     download_student_inscriptions(url=config.MBO_CSV_URL, file=config.DUO_MBO_FILE)
-    download_student_inscriptions(
-        url=config.HBO_CSV_I_URL, file=config.DUO_HBO_I_FILE
-    )  # ingeschrevenen
-    download_student_inscriptions(
-        url=config.HBO_CSV_D_URL, file=config.DUO_HBO_D_FILE
-    )  # gediplomeerden
-    download_student_inscriptions(
-        url=config.WO_CSV_I_URL, file=config.DUO_WO_I_FILE
-    )  # ingeschrevenen
-    download_student_inscriptions(
-        url=config.WO_CSV_D_URL, file=config.DUO_WO_D_FILE
-    )  # gediplomeerden
+    # download_student_inscriptions(
+    #     url=config.HBO_CSV_I_URL, file=config.DUO_HBO_I_FILE
+    # )  # ingeschrevenen
+    # download_student_inscriptions(
+    #     url=config.HBO_CSV_D_URL, file=config.DUO_HBO_D_FILE
+    # )  # gediplomeerden
+    # download_student_inscriptions(
+    #     url=config.WO_CSV_I_URL, file=config.DUO_WO_I_FILE
+    # )  # ingeschrevenen
+    # download_student_inscriptions(
+    #     url=config.WO_CSV_D_URL, file=config.DUO_WO_D_FILE
+    # )  # gediplomeerden

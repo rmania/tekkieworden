@@ -1,15 +1,24 @@
 import matplotlib.pyplot as plt
+from matplotlib.ticker import StrMethodFormatter
 import pandas as pd
 import streamlit as st
 import altair as alt
 from tekkieworden.config import config
+from tekkieworden.processing.munge import prepare_mbo_file
+from tekkieworden.processing.readers import open_tech_label_yaml
 from tekkieworden.processing.visual_helpers import remove_borders, add_value_labels
 
 groupby_cols = ['instellingsnaam_duo', 'opleidingsnaam_duo',
                 'ho_type', 'tech_label', 'soortopleiding_duo']
 
 @st.cache
-def load_data():
+def load_data_mbo():
+
+    mbo_opl_agg = prepare_mbo_file(groupby_col = 'tech_label')
+    return mbo_opl_agg
+
+@st.cache
+def load_data_ho():
 
     data = pd.read_csv(str(config.PATH_TO_MUNGED_DATA) + "/opleidingen_tech_filtered.csv")
     agg_i_cols = data.filter(regex="tot_i", axis=1).columns.tolist()
@@ -35,12 +44,13 @@ gridsize = (3, 2)
 ax1 = plt.subplot2grid(gridsize, (0, 0), colspan=1, rowspan=2)
 ax2 = plt.subplot2grid(gridsize, (0, 1), colspan=1, rowspan=2)
 ax3 = plt.subplot2grid(gridsize, (2, 0), colspan=2)
-line_specs = {'kind': 'line', 'marker': 'o', 'color': 'indianred', 'alpha': .6}
+line_specs = {'kind': 'line', 'marker': 'o', 'cmap': 'Set1', 'alpha': .6}
 hline_specs= {'c': 'darkgray', 'linewidth':2, 'zorder': 0, 'alpha': .8, 'linestyle' : "--"}
+legend_specs = {'loc': 'best', 'ncol': 2, 'frameon': False}
 
 if analysis == "Ingeschrevenen":
-
-    agg_i_cols, _ , df = load_data()
+    # data plot 1
+    agg_i_cols, _ , df = load_data_ho()
     filter_vars = st.sidebar.multiselect(
                 f"Select {dimvar}",
                 df[dimvar].unique())
@@ -60,8 +70,13 @@ if analysis == "Ingeschrevenen":
     for name in filter_vars:
         plotset = agg_df[agg_df[dimvar] == name][agg_cols].reset_index(drop=True).T.rename(columns={0: name})
         plotset.plot(ax=ax1, label=name, **line_specs)
-    ax1.legend(frameon=False, loc='upper center', ncol=2)
-
+    ax1.legend(**legend_specs)
+    ax1.set(title='ho')
+    # data plot 2
+    mbo_opl_agg = load_data_mbo()
+    mbo_opl_agg.T.plot(ax=ax2, **line_specs)
+    ax2.set(title='mbo')
+    # data plot 3
     top = df.groupby([dimvar])['2019_tot_i'].sum().sort_values(ascending=False)
     mean_ = top.mean()
     top15 = top[:15].to_frame().rename(columns={'2019_tot_i': 'ingeschrevenen'})
@@ -72,14 +87,16 @@ if analysis == "Ingeschrevenen":
     ax3.grid(axis="y", linestyle="--")
 
     for ax in [ax1, ax2, ax3]:
-        _ = plt.setp(ax.get_xticklabels(), rotation='vertical', fontsize=12)
+        _ = plt.setp(ax.get_xticklabels(), fontsize=12)
         remove_borders(ax)
-
+        ax.get_yaxis().set_major_formatter(StrMethodFormatter('{x:,.0f}'))
+    for ax in [ax1, ax2]:
+        _ = plt.setp(ax.get_xticklabels(), rotation='horizontal')
     st.pyplot()
 
 elif analysis == "Gediplomeerden":
 
-    _, agg_d_cols, df = load_data()
+    _, agg_d_cols, df = load_data_ho()
     filter_vars = st.sidebar.multiselect(
                 f"Select {dimvar}",
                 df[dimvar].unique())
@@ -90,7 +107,7 @@ elif analysis == "Gediplomeerden":
                    '2017_tot_d': '2017',
                    '2018_tot_d': '2018'}
     agg_cols = ['2014', '2015', '2016', '2017', '2018']
-
+    # data plot 1
     agg_df = df.groupby([dimvar])[agg_d_cols].sum().reset_index()
     agg_df = agg_df.rename(columns=rename_dict)
     agg_melt = pd.melt(frame=agg_df, id_vars=dimvar,
@@ -98,8 +115,13 @@ elif analysis == "Gediplomeerden":
     for name in filter_vars:
         plotset = agg_df[agg_df[dimvar] == name][agg_cols].reset_index(drop=True).T.rename(columns={0: name})
         plotset.plot(ax=ax1, label=name, **line_specs)
-    ax1.legend(frameon=False, loc='upper center', ncol=2)
-
+    ax1.legend(**legend_specs)
+    ax1.set(title='ho')
+    # data plot 2
+    mbo_opl_agg = load_data_mbo()
+    mbo_opl_agg.T.plot(ax=ax2, **line_specs)
+    ax2.set(title='mbo')
+    # data plot 3
     top = df.groupby([dimvar])['2018_tot_d'].sum().sort_values(ascending=False)
     mean_ = top.mean()
     top15 = top[:15].to_frame().rename(columns={'2018_tot_d': 'gediplomeerden'})
@@ -110,8 +132,11 @@ elif analysis == "Gediplomeerden":
     ax3.grid(axis="y", linestyle="--")
 
     for ax in [ax1, ax2, ax3]:
-        _ = plt.setp(ax.get_xticklabels(), rotation='vertical', fontsize=12)
+        _ = plt.setp(ax.get_xticklabels(), fontsize=12)
         remove_borders(ax)
+        ax.get_yaxis().set_major_formatter(StrMethodFormatter('{x:,.0f}'))
+    for ax in [ax1, ax2]:
+        _ = plt.setp(ax.get_xticklabels(), rotation='horizontal')
 
     st.pyplot()
 

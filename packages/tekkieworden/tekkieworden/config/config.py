@@ -16,7 +16,7 @@ FILE_YEAR = 2019
 
 # url + csv filenames for Hoger Onderwijs Ingeschrevenen (_I) and Gediplomeerden (_D) from DUO.nl
 DUO_MAIN_URL = "https://duo.nl/open_onderwijsdata/images/"
-MBO_CSV_URL = DUO_MAIN_URL + "08-deelnemers-per-instelling-bestuur-gemeente-kenniscentrum-sector-bedrijfstak-type-mbo-opleiding-verblijfsjaar-2015-2019.csv"
+MBO_CSV_URL = DUO_MAIN_URL + "03-deelnemers-per-instelling-plaats-kenniscentrum-sector-bedrijfstak-type-mbo-opleiding-niveau-geslacht-2015-2019.csv"
 HBO_CSV_I_URL = DUO_MAIN_URL + "03b-eerstejaars-ingeschrevenen-hbo-domein-hbo-2019.csv"
 HBO_CSV_D_URL = DUO_MAIN_URL + "05-gediplomeerden-hbo-2019.csv"
 WO_CSV_I_URL = DUO_MAIN_URL + "03b-eerstejaars-ingeschrevenen-wo-domein-wo-2019.csv"
