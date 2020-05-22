@@ -37,10 +37,10 @@ https://docs.google.com/spreadsheets/d/1_rcDwsnP4YrTrAhhnZurolSvhwSjPMJpE3iuza5J
 Install the `TEKKIEWORDEN` package
 
  - `python -m venv venv`
- - `virtualenv venv`
+ - `virtualenv --python=$(which python=3.7) venv`
  - `source venv/bin/activate`
  
- - `pip install -e .`
+ - `pip install -e .` (assuming setup.py is in this directory)
  
  Or with tox:
  
