@@ -31,7 +31,7 @@ st.title('Tech Studies NL aanbod')
 st.markdown("""\
         This app illustrates the supply side of tech studies in the Netherlands
     """)
-st.image(str(config.PATH_TO_PICS) + "/go_happy_go_tekkie.png", width=300)\
+st.image(str(config.PATH_TO_PICS) + "/tech_profielen.png", width=300)\
 
 analysis = st.sidebar.selectbox("Choose Analysis", ["Ingeschrevenen", "Gediplomeerden"])
 

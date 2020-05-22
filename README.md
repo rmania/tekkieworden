@@ -36,6 +36,8 @@ https://docs.google.com/spreadsheets/d/1_rcDwsnP4YrTrAhhnZurolSvhwSjPMJpE3iuza5J
 
 Install the `TEKKIEWORDEN` package
 
+ - `git clone https://github.com/rmania/tekkieworden.git`
+ -  git remote set-url origin git+ssh://git@github.com/rmania/tekkieworden.git
  - `python -m venv venv`
  - `virtualenv --python=$(which python=3.7) venv`
  - `source venv/bin/activate`
@@ -49,6 +51,17 @@ Install the `TEKKIEWORDEN` package
  To also have access to the tekkieworden virtual env in Jupyter Notebooks or Lab:
  - `pip install ipykernel`
  - `python -m ipykernel install --user --name tekkieworden --display-name "tekkieworden"`
+
+### Different scripts to launch (still separated blocks) 
+ **download files**
+ - `python tekkieworden/processing/readers.py`
  
+ **clean, join and prepare files**
+ - `python tekkieworden/processing/munge.py`
  
+ **create GAP report PFD**
+ - `python tekkieworden/processing/create_gap_report.py`
+
+ **launch app**
+ - `streamlit run visual_app.py`
  
