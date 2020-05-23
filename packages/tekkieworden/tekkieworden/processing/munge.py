@@ -349,14 +349,14 @@ def tag_tech_studies(input_df: pd.DataFrame, tech_keywords=List[str]) -> pd.Data
     return input_df
 
 
-def label_tech_studies(input_df: pd.DataFrame) -> pd.DataFrame:
+def label_tech_studies(input_df: pd.DataFrame, yaml_file, label_col:str) -> pd.DataFrame:
     """
     create a tech_label column based on a mapping in the tech_label.yml
     :param input_df: pd.Dataframe
     :return: pd.DataFrame with additional tech_label column to filter on
     """
-    tech_label_dict = open_tech_label_yaml(yaml_file='ho_tech_labels.yml')["tech"]
-    input_df["tech_label"] = input_df["opleidingsnaam_duo"].map(tech_label_dict)
+    tech_label_dict = open_tech_label_yaml(yaml_file=yaml_file)["tech"]
+    input_df["tech_label"] = input_df[label_col].map(tech_label_dict)
     # tricky CHECK with TEKKIEWORDEN!
     input_df["tech_label"] = input_df["tech_label"].fillna("no_tech")
 
@@ -450,7 +450,7 @@ def main():
     duo_file = concat_hbo_wo(hbo_input_df=hbo, wo_input_df=wo)
     df = merge_duo_sdb_files(duo_file=duo_file, sdb_file=sdb_file)
     df = tag_tech_studies(input_df=df, tech_keywords=config.tech_keywords)
-    df = label_tech_studies(input_df=df)
+    df = label_tech_studies(input_df=df, yaml_file='ho_tech_labels.yml', label_col='opleidingsnaam_duo')
     write_df_csv(input_df=df, filename="opleidingen_total_munged.csv")
     tech_filtered_df = filter_tech_studies(input_df=df)
     write_df_csv(input_df=tech_filtered_df, filename="opleidingen_tech_filtered.csv")
