@@ -13,7 +13,8 @@ from tekkieworden.processing.writers import write_df_csv, write_excel_to_yaml
 from tekkieworden.processing.utilities import pandas_join_key_dual, pandas_join_on_index
 
 
-_logger = logging.getLogger(__name__)
+_logger = logging.getLogger()
+_logger.setLevel(logging.INFO)
 
 
 def prepare_sdb_opleidingen_file(

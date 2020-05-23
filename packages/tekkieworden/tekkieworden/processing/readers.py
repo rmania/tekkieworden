@@ -9,7 +9,7 @@ from tekkieworden.config import config
 _logger = logging.getLogger(__name__)
 
 
-def download_student_inscriptions(url, file: str):
+def download_duo_files(url, file: str):
     """
     :param url:  https://duo.nl/open_onderwijsdata/databestanden/ho/ingeschreven/
     :param file: Hoger Onderwijs hbo_inscriptions + wo_inscriptions
@@ -42,16 +42,21 @@ def open_tech_label_yaml(yaml_file):
 
 
 if __name__ == "__main__":
-    download_student_inscriptions(url=config.MBO_CSV_URL, file=config.DUO_MBO_FILE)
-    # download_student_inscriptions(
-    #     url=config.HBO_CSV_I_URL, file=config.DUO_HBO_I_FILE
-    # )  # ingeschrevenen
-    # download_student_inscriptions(
-    #     url=config.HBO_CSV_D_URL, file=config.DUO_HBO_D_FILE
-    # )  # gediplomeerden
-    # download_student_inscriptions(
-    #     url=config.WO_CSV_I_URL, file=config.DUO_WO_I_FILE
-    # )  # ingeschrevenen
-    # download_student_inscriptions(
-    #     url=config.WO_CSV_D_URL, file=config.DUO_WO_D_FILE
-    # )  # gediplomeerden
+    download_duo_files(
+        url=config.HBO_CSV_I_URL, file=config.DUO_HBO_I_FILE
+    )  # hbo ingeschrevenen
+    download_duo_files(
+        url=config.HBO_CSV_D_URL, file=config.DUO_HBO_D_FILE
+    )  # hbo gediplomeerden
+    download_duo_files(
+        url=config.WO_CSV_I_URL, file=config.DUO_WO_I_FILE
+    )  # wo ingeschrevenen
+    download_duo_files(
+        url=config.WO_CSV_D_URL, file=config.DUO_WO_D_FILE
+    )  # wo gediplomeerden
+    download_duo_files(
+        url=config.MBO_CSV_I_URL, file=config.DUO_MBO_I_FILE
+    )  # mbo ingeschrevenen (deelnemers)
+    download_duo_files(
+        url=config.MBO_CSV_D_URL, file=config.DUO_MBO_D_FILE
+    )  # mbo gediplomeerden

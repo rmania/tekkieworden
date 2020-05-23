@@ -5,7 +5,8 @@ import pandas as pd
 from tekkieworden.config import config
 
 
-_logger = logging.getLogger(__name__)
+_logger = logging.getLogger()
+_logger.setLevel(logging.INFO)
 
 
 def write_df_csv(input_df, filename):

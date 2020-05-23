@@ -16,7 +16,8 @@ FILE_YEAR = 2019
 
 # url + csv filenames for Hoger Onderwijs Ingeschrevenen (_I) and Gediplomeerden (_D) from DUO.nl
 DUO_MAIN_URL = "https://duo.nl/open_onderwijsdata/images/"
-MBO_CSV_URL = DUO_MAIN_URL + "03-deelnemers-per-instelling-plaats-kenniscentrum-sector-bedrijfstak-type-mbo-opleiding-niveau-geslacht-2015-2019.csv"
+MBO_CSV_I_URL = DUO_MAIN_URL + "03-deelnemers-per-instelling-plaats-kenniscentrum-sector-bedrijfstak-type-mbo-opleiding-niveau-geslacht-2015-2019.csv"
+MBO_CSV_D_URL = DUO_MAIN_URL + "10-gediplomeerden-per-instelling-plaats-kenniscentrum-sector-bedrijfstak-type-mbo-opleiding-niveau-geslacht-2015-2019.csv"
 HBO_CSV_I_URL = DUO_MAIN_URL + "03b-eerstejaars-ingeschrevenen-hbo-domein-hbo-2019.csv"
 HBO_CSV_D_URL = DUO_MAIN_URL + "05-gediplomeerden-hbo-2019.csv"
 WO_CSV_I_URL = DUO_MAIN_URL + "03b-eerstejaars-ingeschrevenen-wo-domein-wo-2019.csv"
@@ -24,12 +25,14 @@ WO_CSV_D_URL = DUO_MAIN_URL + "05-gediplomeerden-wo-2019.csv"
 
 # files
 SDB_FILE = "studiekeuze123_all_20200417.xlsx"
-DUO_MBO_FILE = "mbo_inscriptions"
+DUO_MBO_I_FILE = "mbo_inscriptions"
+DUO_MBO_D_FILE = "mbo_gediplomeerden"
 DUO_HBO_I_FILE = "hbo_inscriptions"
 DUO_HBO_D_FILE = "hbo_gediplomeerden"
 DUO_WO_I_FILE = "wo_inscriptions"
 DUO_WO_D_FILE = "wo_gediplomeerden"
-DUO_MBO_CSV = f"mbo_inscriptions_{FILE_YEAR}.csv"
+DUO_MBO_I_CSV = f"mbo_inscriptions_{FILE_YEAR}.csv"
+DUO_MBO_D_CSV = f"mbo_gediplomeerden_{FILE_YEAR}.csv"
 DUO_HBO_I_CSV = f"hbo_inscriptions_{FILE_YEAR}.csv"
 DUO_HBO_D_CSV = f"hbo_gediplomeerden_{FILE_YEAR}.csv"
 DUO_WO_I_CSV = f"wo_inscriptions_{FILE_YEAR}.csv"
