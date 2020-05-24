@@ -63,7 +63,7 @@ def create_PDF_report(input_df, output_file):
 def main():
     # Read in the file and get our pivot table summary
     df = read_tech_file(
-        str(config.PATH_TO_MUNGED_DATA), file="opleidingen_tech_filtered.csv"
+        str(config.PATH_TO_MUNGED_DATA), file="opleidingen_ho_tech_filtered.csv"
     )
     df_tech_report = add_spark_charts(input_df=df)
     create_PDF_report(input_df=df_tech_report, output_file="gap_report.pdf")
