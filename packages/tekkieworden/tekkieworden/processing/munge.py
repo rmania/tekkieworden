@@ -375,31 +375,81 @@ def filter_tech_studies(input_df: pd.DataFrame) -> pd.DataFrame:
     return tech_filtered_df
 
 
-def prepare_mbo_file(groupby_col):
-    mbo = pd.read_csv(str(config.PATH_TO_RAW_DATA) + "/mbo_inscriptions_2019.csv", sep=";")
-    mbo_tech_dict = open_tech_label_yaml('mbo_tech_labels.yml')['tech']
-    mbo.columns = mbo.columns.str.replace(" ", "_").str.replace("'", "").str.lower()
-    mbo['tech_label'] = mbo.kwalificatie_naam.map(mbo_tech_dict)
-    rename_dict = {'totaal2015': '2015',
-                   'totaal2016': '2016',
-                   'totaal2017': '2017',
-                   'totaal2018': '2018',
-                   'totaal2019': '2019'}
-    mbo = mbo.rename(columns=rename_dict)
-    agg_cols = ['2015', '2016', '2017', '2018', '2019']
-    mbo_opl_agg = mbo[mbo.tech_label != 'no_tech'].groupby(groupby_col)[agg_cols].sum()
+def unstack_duo_mbo_files(input_df):
+    agg_cols = input_df.filter(regex='\d', axis=1).columns.tolist()
+    groupby_cols = ['brin_nummer', 'kwalificatie_code', 'kwalificatie_naam']
+    agg = input_df.groupby(groupby_cols)[agg_cols].sum()
+    logging.info(f"dataframe shape: {agg.shape}")
 
-    return mbo_opl_agg
+    return agg
+
+
+def munge_mbo_files():
+    """
+    prepare the mbo duo files
+    :return: pd.DataFrame
+    """
+    logging.info("prepare mbo file ingeschrevenen")
+    mbo_i = pd.read_csv(str(config.PATH_TO_RAW_DATA) + '/' + config.DUO_MBO_D_CSV, sep=';')
+    mbo_i.columns = mbo_i.columns.str.lower().str.replace(" ", "_")
+    mbo_rename_i_dict = {'man2015': '2015_man_i',
+                         'vrouw2015': '2015_vrouw_i',
+                         'totaal2015': '2015_tot_i',
+                         'man2016': '2016_man_i',
+                         'vrouw2016': '2016_vrouw_i',
+                         'totaal2016': '2016_tot_i',
+                         'man2017': '2017_man_i',
+                         'vrouw2017': '2017_vrouw_i',
+                         'totaal2017': '2017_tot_i',
+                         'man2018': '2018_man_i',
+                         'vrouw2018': '2018_vrouw_i',
+                         'totaal2018': '2018_tot_i',
+                         'man2019': '2019_man_i',
+                         'vrouw2019': '2019_vrouw_i',
+                         'totaal2019': '2019_tot_i'}
+    mbo_i = mbo_i.rename(columns=mbo_rename_i_dict)
+
+    logging.info("prepare mbo file ingeschrevenen")
+    mbo_d = pd.read_csv(str(config.PATH_TO_RAW_DATA) + '/' + config.DUO_MBO_I_CSV, sep=';')
+    mbo_d.columns = mbo_d.columns.str.lower().str.replace(" ", "_")
+    mbo_rename_d_dict = {'dipman2015': '2015_man_d',
+                         'dipvrw2015': '2015_vrouw_d',
+                         'diptotaal2015': '2015_tot_d',
+                         'dipman2016': '2016_man_d',
+                         'dipvrw2016': '2016_vrouw_d',
+                         'diptotaal2016': '2016_tot_d',
+                         'dipman2017': '2017_man_d',
+                         'dipvrw2017': '2017_vrouw_d',
+                         'diptotaal2017': '2017_tot_d',
+                         'dipman2018': '2018_man_d',
+                         'dipvrw2018': '2018_vrouw_d',
+                         'diptotaa2018l': '2018_tot_d',
+                         'dipman2019': '2019_man_d',
+                         'dipvrw2019': '2019_vrouw_d',
+                         'diptotaal2019': '2019_tot_d'}
+    mbo_d = mbo_d.rename(columns=mbo_rename_d_dict)
+
+    mbo_i_agg = unstack_duo_mbo_files(input_df=mbo_i)
+    mbo_d_agg = unstack_duo_mbo_files(input_df=mbo_d)
+
+    df = pandas_join_on_index(left_df=mbo_i_agg, right_df=mbo_d_agg, how='left').reset_index()
+    df = label_tech_studies(input_df=df, yaml_file='mbo_tech_labels.yml', label_col='kwalificatie_naam')
+
+    df = df.query("tech_label != 'no_tech'")
+
+    return df
 
 
 def main():
     write_excel_to_yaml(
-        input_df=str(config.PATH_TO_RAW_DATA) + "/cluster_tech_labeling_5.xlsx",
-        filename="ho_tech_labels.yml",
-    )
+        input_df=str(config.PATH_TO_RAW_DATA) + "/cluster_ho_tech_labeling.xlsx",
+        filename="ho_tech_labels.yml")
+    write_excel_to_yaml(
+        input_df=str(config.PATH_TO_RAW_DATA) + "/cluster_mbo_tech_labeling.xlsx",
+        filename="mbo_tech_labels.yml")
+    # ho file preparation
     sdb_file = prepare_sdb_opleidingen_file(
-        path=config.PATH_TO_RAW_DATA, file=config.SDB_FILE, data_quality_report=None
-    )
+        path=config.PATH_TO_RAW_DATA, file=config.SDB_FILE, data_quality_report=None)
     hbo = unstack_duo_ho_files(ho_type="hbo")
     wo = unstack_duo_ho_files(ho_type="wo")
     duo_file = concat_hbo_wo(hbo_input_df=hbo, wo_input_df=wo)
@@ -408,7 +458,10 @@ def main():
     df = label_tech_studies(input_df=df, yaml_file='ho_tech_labels.yml', label_col='opleidingsnaam_duo')
     write_df_csv(input_df=df, filename="opleidingen_total_munged.csv")
     tech_filtered_df = filter_tech_studies(input_df=df)
-    write_df_csv(input_df=tech_filtered_df, filename="opleidingen_tech_filtered.csv")
+    write_df_csv(input_df=tech_filtered_df, filename="opleidingen_ho_tech_filtered.csv")
+    # mbo file preparation
+    df = munge_mbo_files()
+    write_df_csv(input_df=df, filename="opleidingen_mbo_tech_filtered.csv")
 
 
 if __name__ == "__main__":
