@@ -391,7 +391,7 @@ def munge_mbo_files():
     :return: pd.DataFrame
     """
     logging.info("prepare mbo file ingeschrevenen")
-    mbo_i = pd.read_csv(str(config.PATH_TO_RAW_DATA) + '/' + config.DUO_MBO_D_CSV, sep=';')
+    mbo_i = pd.read_csv(str(config.PATH_TO_RAW_DATA) + '/' + config.DUO_MBO_I_CSV, sep=';')
     mbo_i.columns = mbo_i.columns.str.lower().str.replace(" ", "_")
     mbo_rename_i_dict = {'man2015': '2015_man_i',
                          'vrouw2015': '2015_vrouw_i',
@@ -411,7 +411,7 @@ def munge_mbo_files():
     mbo_i = mbo_i.rename(columns=mbo_rename_i_dict)
 
     logging.info("prepare mbo file ingeschrevenen")
-    mbo_d = pd.read_csv(str(config.PATH_TO_RAW_DATA) + '/' + config.DUO_MBO_I_CSV, sep=';')
+    mbo_d = pd.read_csv(str(config.PATH_TO_RAW_DATA) + '/' + config.DUO_MBO_D_CSV, sep=';')
     mbo_d.columns = mbo_d.columns.str.lower().str.replace(" ", "_")
     mbo_rename_d_dict = {'dipman2015': '2015_man_d',
                          'dipvrw2015': '2015_vrouw_d',
@@ -461,8 +461,8 @@ def main():
     tech_filtered_df = filter_tech_studies(input_df=df)
     write_df_csv(input_df=tech_filtered_df, filename="opleidingen_ho_tech_filtered.csv")
     # mbo file preparation
-    df = munge_mbo_files()
-    write_df_csv(input_df=df, filename="opleidingen_mbo_tech_filtered.csv")
+    mbo = munge_mbo_files()
+    write_df_csv(input_df=mbo, filename="opleidingen_mbo_tech_filtered.csv")
 
 
 if __name__ == "__main__":

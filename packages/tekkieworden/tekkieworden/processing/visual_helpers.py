@@ -1,4 +1,7 @@
 import seaborn as sns
+import pandas as pd
+import numpy as np
+import re
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 import math
@@ -57,7 +60,7 @@ def melt_plot_facet_grid(input_df, dim: str, sexe: str,
     """
     dim = dim
     # years differ per ingeschrevenen or gediplomeerden and per update. fix:
-    dim_list = tech.filter(regex=rf'_{dim}$').columns.tolist()
+    dim_list = input_df.filter(regex=rf'_{dim}$').columns.tolist()
     years = np.unique(list(map(lambda sub: int(''.join(
         [x for x in sub if x.isnumeric()])), dim_list)))
 
