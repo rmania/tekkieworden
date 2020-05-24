@@ -1,5 +1,6 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 import math
 
 spark_chars = u"▁▂▃▄▅▆▇█"
@@ -42,42 +43,90 @@ def create_spark_charts(series, minimum=None, maximum=None):
     return u"".join(spark_for(n) if _isan(n) else " " for n in series)
 
 
-def plot_facet_grid(input_df, hue_var, groupby_var):
+def melt_plot_facet_grid(input_df, dim: str, sexe: str,
+                         hue_var: str, groupby_var: str,
+                         plot_facet_grid=None) -> pd.DataFrame:
     """
-    create seaborn FacetGrid lineplot
-    :param input_df: melted pd.DataFrame
-    :param hue_var: HUE variable
+    Function to melt pd.Dataframe for plotting purposes
+    :param input_df: pd.DataFrame to be melted
+    :param dim: dimension to plot:  choose: "i" for ingeschrevenen or "d" for gediplomeerden
+    :param sexe: numeric sexe to plot: "man", "vrouw" or "total"
+    :param hue_var: HUE variable on wich dimension to split in each plot
     :param groupby_var: value to groupby on
-    :return: Matplotlib ax
+    :return: melted pd.DataFrame or FacetGrid
     """
-    id_vars = ["instellingsnaam_duo", "opleidingsnaam_duo", groupby_var, hue_var]
+    dim = dim
+    # years differ per ingeschrevenen or gediplomeerden and per update. fix:
+    dim_list = tech.filter(regex=rf'_{dim}$').columns.tolist()
+    years = np.unique(list(map(lambda sub: int(''.join(
+        [x for x in sub if x.isnumeric()])), dim_list)))
 
-    no = len(input_df[hue_var].unique())
-    palette = dict(zip(input_df[hue_var].unique(), sns.color_palette("rocket_r", no)))
+    if sexe == 'man':
+        dim_cols = [f"{years[0]}_man_{dim}", f"{years[1]}_man_{dim}", f"{years[2]}_man_{dim}",
+                    f"{years[3]}_man_{dim}", f"{years[4]}_man_{dim}"]
+    elif sexe == 'vrouw':
+        dim_cols = [f"{years[0]}_vrouw_{dim}", f"{years[1]}_vrouw_{dim}", f"{years[2]}_vrouw_{dim}",
+                    f"{years[3]}_vrouw_{dim}", f"{years[4]}_vrouw_{dim}"]
+    elif sexe == 'total':
+        dim_cols = [f"{years[0]}_tot_{dim}", f"{years[1]}_tot_{dim}", f"{years[2]}_tot_{dim}",
+                    f"{years[3]}_tot_{dim}", f"{years[4]}_tot_{dim}"]
 
-    grid = sns.FacetGrid(
-        input_df,
-        col=groupby_var,
-        palette=palette,
-        col_wrap=4,
-        hue=hue_var,
-        sharex=False,
-        sharey=False,
-        height=5,
-        aspect=1.5,
+    id_vars = [groupby_var, hue_var]
+    value_name = "".join(["ingeschreven" if x == 'i' else 'gediplomeerden' for x in dim])
+
+    melt_frame = (
+        pd.melt(
+            frame=input_df,
+            id_vars=id_vars,
+            value_vars=dim_cols,
+            var_name=sexe,
+            value_name=value_name
+        )
+            .sort_values(
+            by=[
+                groupby_var,
+                hue_var,
+                sexe,
+            ]
+        )
+            .groupby([groupby_var, hue_var, sexe])
+            .agg({value_name: "sum"})
+            .reset_index()
     )
+    melt_frame[sexe] = (melt_frame[sexe]
+                        .apply(lambda x: re.sub("[^0-9]", " ", x)))
+    melt_frame[sexe] = melt_frame[sexe].astype(int)
 
-    grid.map(plt.axhline, y=0, ls=":", c=".5")
+    if plot_facet_grid:
 
-    grid.map(plt.plot, "variable", "inschrijvingen", marker="o")
-    grid.add_legend()
+        no = len(melt_frame[hue_var].unique())
+        palette = dict(zip(melt_frame[hue_var].unique(), sns.color_palette("rocket_r", no)))
 
-    for ax in grid.axes.flat:
-        _ = plt.setp(
-            ax.get_xticklabels(), visible=True
-        )  ## set proporty of an artist object
+        grid = sns.FacetGrid(
+            melt_frame,
+            col=groupby_var,
+            palette=palette,
+            col_wrap=4,
+            hue=hue_var,
+            sharex=False,
+            sharey=False,
+            height=5,
+            aspect=1.5,
+        )
 
-    return grid
+        grid.map(plt.axhline, y=melt_frame[value_name].mean(), ls=":", c=".5")
+        grid.map(plt.plot, sexe, value_name, marker="o")
+        grid.add_legend()
+
+        for ax in grid.axes.flat:
+            _ = plt.setp(
+                ax.get_xticklabels(), visible=True, size=12
+            )  ## set proporty of an artist object
+            ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+
+        return grid
+
+    return melt_frame
 
 
 def remove_borders(ax, left=False, bottom=False, right=True, top=True):

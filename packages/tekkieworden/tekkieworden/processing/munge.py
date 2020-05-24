@@ -375,51 +375,6 @@ def filter_tech_studies(input_df: pd.DataFrame) -> pd.DataFrame:
     return tech_filtered_df
 
 
-def melt_frame(input_df, hue_var: str, groupby_var: str) -> pd.DataFrame:
-    """
-    Function to melt pd.Dataframe for plotting purposes
-    :param input_df: melted pd.DataFrame
-    :param hue_var: HUE variable
-    :param groupby_var: value to groupby on
-    :return: melted pd.DataFrame
-    """
-
-    tot_cols = [
-        "tot_2015_duo",
-        "tot_2016_duo",
-        "tot_2017_duo",
-        "tot_2018_duo",
-        "tot_2019_duo",
-    ]
-    id_vars = ["instellingsnaam_duo", "opleidingsnaam_duo", groupby_var, hue_var]
-
-    melt_frame = (
-        pd.melt(
-            frame=input_df,
-            id_vars=id_vars,
-            value_vars=tot_cols,
-            value_name="inschrijvingen",
-        )
-        .sort_values(
-            by=[
-                "instellingsnaam_duo",
-                "opleidingsnaam_duo",
-                groupby_var,
-                hue_var,
-                "variable",
-            ]
-        )
-        .groupby([groupby_var, hue_var, "variable"])
-        .agg({"inschrijvingen": "sum"})
-        .reset_index()
-    )
-    melt_frame.variable = melt_frame.variable.apply(
-        lambda x: x.replace("tot_", "").replace("_duo", "")
-    )
-
-    return melt_frame
-
-
 def prepare_mbo_file(groupby_col):
     mbo = pd.read_csv(str(config.PATH_TO_RAW_DATA) + "/mbo_inscriptions_2019.csv", sep=";")
     mbo_tech_dict = open_tech_label_yaml('mbo_tech_labels.yml')['tech']
