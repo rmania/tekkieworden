@@ -69,6 +69,8 @@ def pandas_join_on_index(left_df, right_df, how="inner"):
     )
 
     logging.info(f"Join result\n\t{joined_df._merge.value_counts()}")
+    joined_df = joined_df.drop("_merge", axis=1)
+
     logging.info(f"joined df: {joined_df.shape}")
 
     return joined_df

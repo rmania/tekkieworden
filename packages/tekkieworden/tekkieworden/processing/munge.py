@@ -9,7 +9,8 @@ from typing import List
 
 from tekkieworden.config import config
 from tekkieworden.processing.readers import open_tech_label_yaml
-from tekkieworden.processing.writers import write_df_csv, write_excel_to_yaml
+from tekkieworden.processing.writers import write_df_csv, write_ho_techlabel_excel_to_yaml, \
+    write_mbo_techlabel_excel_to_yaml
 from tekkieworden.processing.utilities import pandas_join_key_dual, pandas_join_on_index
 
 
@@ -441,10 +442,10 @@ def munge_mbo_files():
 
 
 def main():
-    write_excel_to_yaml(
+    write_ho_techlabel_excel_to_yaml(
         input_df=str(config.PATH_TO_RAW_DATA) + "/cluster_ho_tech_labeling.xlsx",
         filename="ho_tech_labels.yml")
-    write_excel_to_yaml(
+    write_mbo_techlabel_excel_to_yaml(
         input_df=str(config.PATH_TO_RAW_DATA) + "/cluster_mbo_tech_labeling.xlsx",
         filename="mbo_tech_labels.yml")
     # ho file preparation
