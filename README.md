@@ -1,38 +1,10 @@
+Repository om de mismatch op de Nederlandse tech arbeidsmarkt inzichtelijk te maken middels een GAP report. In eerste instantie wordt er gekeken naar de aanbod zijde en dan specifiek voor een vijftal profielen (zie image) die [Tekkieworden](https://tekkieworden.nl/) heeft opgesteld. Hoe de vraagzijde zich daartoe verhoudt wordt apart onderzocht maar zal uiteindelijk in dit project moeten worden bijgevoegd.
 
-mismatch arbeidsmarkt. Er zijn afstudeerders (quantiteit) doelgroepen ondervertegenwoordigd
-Bepaalde profielen hebben een mismatch aanbod vs vraag. Dit willen we inzichtelijk maken dmv een Gap report. 
-Dit moet inzichtelijk maken waar we het over hebben: mist er opleidingscapaciteit en in welke sectoren
-/opleidingen. 
 
-Haarlem: 70/80% gaan naar Amsterdam:hoeveel data analisten gaan elke dag naar Amsterdam. Spreiding en mismatch
-: minsterieOVW : als jullie opleidingen ter beschikking, extra support aan make IT work, --> verkleining 
-Culurele diversiteit : Start-up: wat is het probleem: hoe wordt het aanbod
 
-**TechConnect**: https://techconnect.city/
-Komende vier jaar gaat TechConnect 50.000 extra mensen —uit ondervertegenwoordigde groepen— 
-de tech-arbeidsmarkt laten bestormen. In de praktijk betekent dit duizenden vrouwen, mensen uit sociaal 
-kansarmere wijken, grote groepen 40-plussers en MKB’ers die tot programmeur, data-analist, ‘growth hacker’, 
-UX ontwerper of tech-beheer worden opgeleid. 
+![profielen](/home/diederik/projects/tekkieworden/docs/images/tech_profielen.png)
 
-**TekkieWorden**: https://tekkieworden.nl/
-Gids welke tech-banen er zijn, welke profielen. GAP report als aanjager en pressiemiddel: 
-investeringen aanjagen op de juiste plekken.  
 
-Mogelijke andere interessante sources:
-- **DUO**: Dienst Uitvoering Onderwijs. DUO verzamelt gegevens over het bekostigde onderwijs in Nederland en
-stelt daarvan een grote hoeveelheid online beschikbaar. Hiermee speelt DUO in op de toenemende vraag naar 
-onderwijsgegevens vanuit gemeenten, scholen, onderzoeksbureaus, dagbladen, softwareleveranciers en andere 
-partijen die geïnteresseerd zijn in het onderwijsveld. De gegevens gaan over leerlingen, diploma's, personeel,
-financiën, samenwerkingsverbanden of de locatie vanscholen. DUO stelt de gegevens en worden beschikbaar 
-gesteld, zodat anderen zelf informatieproducten kunnen ontwikkelen. Zo kunnen de gegevens gebruikt worden 
-voor het uitvoeren van beleid, als vulling voor webapplicaties of als onderzoeksdata. 
-API docs: https://duo.nl/open_onderwijsdata/images/technische-toelichting-gebruik-duo-api-met-open-onderwijsdata.pdf
-
-vacature kant: vraag-kant KOPPELEN aan opleidingscapacit(aanbod) op kwantiteit en doelgroepen.
-vraag kant: 
-https://docs.google.com/spreadsheets/d/1soBQBGeI64vzG9qI1LY6Dm5Gh9pmhrbJgMiTPSMEbBc/edit?ts=5e984e2f#gid=1223856996
-Aanbod kant: 
-https://docs.google.com/spreadsheets/d/1_rcDwsnP4YrTrAhhnZurolSvhwSjPMJpE3iuza5J3H0/edit#gid=0
 
 Install the `TEKKIEWORDEN` package
 
@@ -41,13 +13,13 @@ Install the `TEKKIEWORDEN` package
  - `python -m venv venv`
  - `virtualenv --python=$(which python=3.7) venv`
  - `source venv/bin/activate`
- 
+
  - `pip install -e .` (assuming setup.py is in this directory)
- 
+
  Or with tox:
- 
+
  `tox -e install_locally`
- 
+
  To also have access to the tekkieworden virtual env in Jupyter Notebooks or Lab:
  - `pip install ipykernel`
  - `python -m ipykernel install --user --name tekkieworden --display-name "tekkieworden"`
@@ -55,13 +27,12 @@ Install the `TEKKIEWORDEN` package
 ### Different scripts to launch (still separated blocks) 
  **download files**
  - `python tekkieworden/processing/readers.py`
- 
+
  **clean, join and prepare files**
  - `python tekkieworden/processing/munge.py`
- 
+
  **create GAP report PFD**
  - `python tekkieworden/processing/create_gap_report.py`
 
  **launch app**
  - `streamlit run visual_app.py`
- 
