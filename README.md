@@ -1,10 +1,4 @@
-Repository om de mismatch op de Nederlandse tech arbeidsmarkt inzichtelijk te maken middels een GAP report. In eerste instantie wordt er gekeken naar de aanbod zijde en dan specifiek voor een vijftal profielen (zie image) die [Tekkieworden](https://tekkieworden.nl/) heeft opgesteld. Hoe de vraagzijde zich daartoe verhoudt wordt apart onderzocht maar zal uiteindelijk in dit project moeten worden bijgevoegd.
-
-
-
-![profielen](/home/diederik/projects/tekkieworden/docs/images/tech_profielen.png)
-
-
+Repository om de mismatch op de Nederlandse tech arbeidsmarkt inzichtelijk te maken middels een GAP report. In eerste instantie wordt er gekeken naar de aanbod zijde en dan specifiek voor een vijftal profielen die [Tekkieworden](https://tekkieworden.nl/) heeft opgesteld. Hoe de vraagzijde zich daartoe verhoudt wordt apart onderzocht maar zal uiteindelijk in dit project moeten worden bijgevoegd.
 
 Install the `TEKKIEWORDEN` package
 
